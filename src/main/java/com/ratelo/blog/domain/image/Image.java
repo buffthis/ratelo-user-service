@@ -1,4 +1,4 @@
-package com.ratelo.blog.domain;
+package com.ratelo.blog.domain.image;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,14 +8,12 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Company {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String url;
 
-    @ManyToOne
-    @JoinColumn(name = "logo_image_id")
-    private Image logo;
+    private String altText;
 }

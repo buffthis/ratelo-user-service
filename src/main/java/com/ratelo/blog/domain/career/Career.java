@@ -1,5 +1,6 @@
-package com.ratelo.blog.domain;
+package com.ratelo.blog.domain.career;
 
+import com.ratelo.blog.domain.company.Company;
 import jakarta.persistence.*;
 import lombok.*;
 

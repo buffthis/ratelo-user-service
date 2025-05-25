@@ -6,3 +6,4 @@ spring:
       uri: http://158.180.91.203:8888
       profile: prod
       label: main
+      enabled: false

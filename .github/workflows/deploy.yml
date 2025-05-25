@@ -36,4 +36,7 @@ jobs:
             docker pull ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest
             docker stop ratelo-user-service || true
             docker rm ratelo-user-service || true
-            docker run -d --name ratelo-user-service -p 8081:8081 ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest
+            docker run -d --name ratelo-user-service \
+              -p 8081:8081 \
+              -e SPRING_PROFILES_ACTIVE=prod \
+              ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest

@@ -1,0 +1,39 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build project
+        run: ./gradlew build
+
+      - name: Build Docker image
+        run: |
+          docker build --build-arg JAR_FILE=build/libs/ratelo-user-service-0.0.1-SNAPSHOT.jar -t ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest .
+
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKER_PAT }}" | docker login -u "${{ vars.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push Docker image
+        run: docker push ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ vars.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            docker pull ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest
+            docker stop ratelo-user-service || true
+            docker rm ratelo-user-service || true
+            docker run -d --name ratelo-user-service -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest

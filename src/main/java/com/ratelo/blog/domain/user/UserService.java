@@ -24,4 +24,8 @@ public class UserService {
     public List<User> getUsersByCompanyId(Long companyId) {
         return careerRepository.findUsersByCompanyId(companyId);
     }
+
+    public User getUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
 }

@@ -1,7 +1,7 @@
 package com.ratelo.blog.api;
 
-import com.ratelo.blog.domain.career.Career;
-import com.ratelo.blog.domain.career.CareerService;
+import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/careers")
+@RequestMapping("/users")
 @RequiredArgsConstructor
-public class CareerController {
+public class UserController {
 
-    private final CareerService careerService;
+    private final UserService userService;
 
     @GetMapping("/{id}")
-    public Career getCareerById(@PathVariable Long id) {
-        return careerService.getCareerById(id);
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
     @GetMapping
-    public List<Career> getAllCareers() {
-        return careerService.getAllCareers();
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 }

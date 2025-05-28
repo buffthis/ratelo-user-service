@@ -1,8 +1,11 @@
 package com.ratelo.blog.domain.career;
 
 import com.ratelo.blog.domain.company.Company;
+import com.ratelo.blog.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -22,8 +25,13 @@ public class Career {
 
     private String position;
 
-    private String period;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @Column(length = 64)
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

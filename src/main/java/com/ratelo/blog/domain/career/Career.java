@@ -9,6 +9,13 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(
+    indexes = {
+        @Index(name = "idx_user_id", columnList = "user_id"),
+        @Index(name = "idx_start_date", columnList = "startDate"),
+        @Index(name = "idx_user_id_start_date", columnList = "user_id, startDate")
+    }
+)
 @Getter
 @Setter
 @Builder

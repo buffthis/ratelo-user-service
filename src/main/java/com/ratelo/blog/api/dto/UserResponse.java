@@ -31,6 +31,7 @@ public class UserResponse {
                 .careers(Optional.ofNullable(user.getCareers())
                         .orElse(Set.of())
                         .stream()
+                        .sorted((a, b) -> b.getStartDate().compareTo(a.getStartDate()))
                         .map(CareerResponse::from)
                         .collect(Collectors.toList()))
                 .build();

@@ -21,7 +21,6 @@ public class CareerResponse {
     private String periodNote;
     private String description;
 
-
     public static CareerResponse from(Career career) {
         return CareerResponse.builder()
                 .id(career.getId())

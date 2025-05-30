@@ -6,8 +6,8 @@ import com.ratelo.blog.domain.image.Image;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -33,13 +33,21 @@ public class User {
     private String bio;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Career> careers = new ArrayList<>();
+    private Set<Career> careers = new HashSet<>();
 
-    public void update(UserUpdateRequest request, Image profileImage, List<Career> careers) {
+    public void update(UserUpdateRequest request, Image profileImage, Set<Career> careers) {
         this.username = request.getUsername();
         this.name = request.getName();
         this.bio = request.getBio();
         this.profileImage = profileImage;
-        this.careers = careers;
+        this.careers.clear();
+        for (Career career : careers) {
+            addCareer(career);
+        }
+    }
+
+    public void addCareer(Career career) {
+        this.careers.add(career);
+        career.setUser(this);
     }
 }

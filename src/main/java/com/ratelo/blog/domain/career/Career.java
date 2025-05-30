@@ -48,6 +48,10 @@ public class Career {
         this.endDate = request.getEndDate();
         this.periodNote = request.getPeriodNote();
         this.description = request.getDescription();
+    }
+
+    public void setUser(User user) {
         this.user = user;
+        user.getCareers().add(this);
     }
 }

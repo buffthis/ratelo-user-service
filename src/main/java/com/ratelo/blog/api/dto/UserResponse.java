@@ -4,6 +4,7 @@ import com.ratelo.blog.domain.user.User;
 import lombok.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -25,7 +26,7 @@ public class UserResponse {
                 .name(user.getName())
                 .bio(user.getBio())
                 .profileImage(ImageResponse.from(user.getProfileImage()))
-                .careers(user.getCareers().stream()
+                .careers(new ArrayList<>(user.getCareers()).stream()
                         .map(CareerResponse::from)
                         .collect(Collectors.toList()))
                 .build();

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.HashSet;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +49,7 @@ public class UserService {
         Image profileImage = imageRepository.findById(request.getProfileImageId())
                 .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
         List<Career> careers = careerRepository.findByIdIn(request.getCareerIds());
-        user.update(request, profileImage, careers);
+        user.update(request, profileImage, new HashSet<>(careers));
         return userRepository.save(user);
     }
 }

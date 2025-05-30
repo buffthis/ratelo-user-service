@@ -32,7 +32,4 @@ public class CareerUpdateRequest {
     private String periodNote;
 
     private String description;
-
-    @NotNull
-    private Long userId;
 }

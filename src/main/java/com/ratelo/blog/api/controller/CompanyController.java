@@ -1,6 +1,6 @@
-package com.ratelo.blog.api;
+package com.ratelo.blog.api.controller;
 
-import com.ratelo.blog.domain.company.Company;
+import com.ratelo.blog.api.dto.CompanyResponse;
 import com.ratelo.blog.domain.company.CompanyService;
 import com.ratelo.blog.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +20,12 @@ public class CompanyController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public Company getCompanyById(@PathVariable Long id) {
-        return companyService.getCompanyById(id);
+    public CompanyResponse getCompanyById(@PathVariable Long id) {
+        return CompanyResponse.from(companyService.getCompanyById(id));
     }
 
     @GetMapping
-    public List<Company> getAllCompanies() {
-        return companyService.getAllCompanies();
+    public List<CompanyResponse> getAllCompanies() {
+        return CompanyResponse.from(companyService.getAllCompanies());
     }
 }

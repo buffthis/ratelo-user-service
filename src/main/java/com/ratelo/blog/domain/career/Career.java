@@ -46,6 +46,7 @@ public class Career {
         this.position = request.getPosition();
         this.startDate = request.getStartDate();
         this.endDate = request.getEndDate();
+        this.periodNote = request.getPeriodNote();
         this.description = request.getDescription();
         this.user = user;
     }

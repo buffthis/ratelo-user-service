@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public User getUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+        return userRepository.findUserByUsername(username).orElse(null);
     }
 
     public User createUser(UserCreateRequest request) {

@@ -2,9 +2,11 @@ package com.ratelo.blog.api.dto;
 
 import com.ratelo.blog.domain.user.User;
 import lombok.*;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -26,7 +28,9 @@ public class UserResponse {
                 .name(user.getName())
                 .bio(user.getBio())
                 .profileImage(ImageResponse.from(user.getProfileImage()))
-                .careers(new ArrayList<>(user.getCareers()).stream()
+                .careers(Optional.ofNullable(user.getCareers())
+                        .orElse(Set.of())
+                        .stream()
                         .map(CareerResponse::from)
                         .collect(Collectors.toList()))
                 .build();

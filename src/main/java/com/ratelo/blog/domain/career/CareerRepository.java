@@ -11,4 +11,6 @@ public interface CareerRepository extends JpaRepository<Career, Long> {
 
     @Query("SELECT c.user FROM Career c WHERE c.company.id = :companyId")
     List<User> findUsersByCompanyId(@Param("companyId") Long companyId);
+
+    List<Career> findByIdIn(List<Long> ids);
 }

@@ -1,12 +1,11 @@
 package com.ratelo.blog.api.controller;
 
+import com.ratelo.blog.api.dto.ImageCreateRequest;
 import com.ratelo.blog.api.dto.ImageResponse;
+import com.ratelo.blog.api.dto.ImageUpdateRequest;
 import com.ratelo.blog.domain.image.ImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +24,17 @@ public class ImageController {
     @GetMapping
     public List<ImageResponse> getAllImages() {
         return ImageResponse.from(imageService.getAllImages());
+    }
+
+    @PostMapping
+    public ImageResponse createImage(@RequestBody ImageCreateRequest request) {
+        return ImageResponse.from(imageService.createImage(request));
+    }
+
+    @PutMapping("/{id}")
+    public ImageResponse updateImage(
+            @PathVariable Long id,
+            @RequestBody ImageUpdateRequest request) {
+        return ImageResponse.from(imageService.updateImage(id, request));
     }
 }

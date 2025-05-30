@@ -1,6 +1,12 @@
 package com.ratelo.blog.domain.user;
 
+import com.ratelo.blog.api.dto.UserCreateRequest;
+import com.ratelo.blog.api.dto.UserUpdateRequest;
+import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.career.CareerRepository;
+import com.ratelo.blog.domain.image.Image;
+import com.ratelo.blog.domain.image.ImageRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CareerRepository careerRepository;
+    private final ImageRepository imageRepository;
 
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
@@ -27,5 +34,21 @@ public class UserService {
 
     public User getUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
+    }
+
+    public User createUser(UserCreateRequest request) {
+        Image profileImage = imageRepository.findById(request.getProfileImageId())
+                .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
+        return userRepository.save(request.toEntity(profileImage));
+    }
+
+    public User updateUser(Long id, UserUpdateRequest request) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        Image profileImage = imageRepository.findById(request.getProfileImageId())
+                .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
+        List<Career> careers = careerRepository.findByIdIn(request.getCareerIds());
+        user.update(request, profileImage, careers);
+        return userRepository.save(user);
     }
 }

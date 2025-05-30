@@ -1,5 +1,6 @@
 package com.ratelo.blog.domain.career;
 
+import com.ratelo.blog.api.dto.CareerUpdateRequest;
 import com.ratelo.blog.domain.company.Company;
 import com.ratelo.blog.domain.user.User;
 import jakarta.persistence.*;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Career {
@@ -34,4 +36,14 @@ public class Career {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void update(CareerUpdateRequest request, Company company, User user) {
+        this.company = company;
+        this.team = request.getTeam();
+        this.position = request.getPosition();
+        this.startDate = request.getStartDate();
+        this.endDate = request.getEndDate();
+        this.description = request.getDescription();
+        this.user = user;
+    }
 }

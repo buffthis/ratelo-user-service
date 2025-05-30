@@ -1,12 +1,11 @@
 package com.ratelo.blog.api.controller;
 
+import com.ratelo.blog.api.dto.UserCreateRequest;
 import com.ratelo.blog.api.dto.UserResponse;
+import com.ratelo.blog.api.dto.UserUpdateRequest;
 import com.ratelo.blog.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +24,17 @@ public class UserController {
     @GetMapping
     public List<UserResponse> getAllUsers() {
         return UserResponse.from(userService.getAllUsers());
+    }
+
+    @PostMapping
+    public UserResponse createUser(@RequestBody UserCreateRequest request) {
+        return UserResponse.from(userService.createUser(request));
+    }
+
+    @PutMapping("/{id}")
+    public UserResponse updateUser(
+            @PathVariable Long id,
+            @RequestBody UserUpdateRequest request) {
+        return UserResponse.from(userService.updateUser(id, request));
     }
 }

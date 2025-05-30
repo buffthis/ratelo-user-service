@@ -30,6 +30,9 @@ public class Career {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    @Column(length = 12)
+    private String periodNote;
+
     @Column(length = 64)
     private String description;
 

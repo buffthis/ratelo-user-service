@@ -26,6 +26,7 @@ public class CompanyService {
     }
 
     public Company createCompany(CompanyCreateRequest request) {
+        
         Image logo = imageRepository.findById(request.getLogoId())
             .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
         return companyRepository.save(request.toEntity(logo));

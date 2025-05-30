@@ -18,6 +18,7 @@ public class CareerResponse {
     private String position;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String periodNote;
     private String description;
 
 
@@ -29,6 +30,7 @@ public class CareerResponse {
                 .position(career.getPosition())
                 .startDate(career.getStartDate())
                 .endDate(career.getEndDate())
+                .periodNote(career.getPeriodNote())
                 .description(career.getDescription())
                 .build();
     }

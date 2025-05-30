@@ -29,6 +29,8 @@ public class CareerCreateRequest {
 
     private LocalDate endDate;
 
+    private String periodNote;
+
     private String description;
 
     @NotNull

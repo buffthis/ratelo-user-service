@@ -6,6 +6,8 @@ import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.career.CareerRepository;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
+import com.ratelo.blog.domain.skill.Skill;
+import com.ratelo.blog.domain.skill.SkillRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final CareerRepository careerRepository;
     private final ImageRepository imageRepository;
+    private final SkillRepository skillRepository;
 
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
@@ -44,7 +47,6 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
             user.setProfileImage(profileImage);
         }
-    
         return userRepository.save(user);
     }
 
@@ -57,7 +59,8 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
         }
         List<Career> careers = careerRepository.findByIdIn(request.getCareerIds());
-        user.update(request, profileImage, careers);
+        List<Skill> skills = skillRepository.findAllById(request.getSkillIds());
+        user.update(request, profileImage, careers, skills);
         return userRepository.save(user);
     }
 }

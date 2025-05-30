@@ -19,4 +19,5 @@ public class UserUpdateRequest {
     private String bio;
     private Long profileImageId;
     private List<Long> careerIds = new ArrayList<>();
+    private List<Long> skillIds = new ArrayList<>();
 } 

@@ -20,6 +20,7 @@ public class UserResponse {
     private String bio;
     private ImageResponse profileImage;
     private List<CareerResponse> careers;
+    private List<SkillResponse> skills;
 
     public static UserResponse from(User user) {
         return UserResponse.builder()
@@ -33,6 +34,11 @@ public class UserResponse {
                         .stream()
                         .sorted((a, b) -> b.getStartDate().compareTo(a.getStartDate()))
                         .map(CareerResponse::from)
+                        .collect(Collectors.toList()))
+                .skills(Optional.ofNullable(user.getSkills())
+                        .orElse(Set.of())
+                        .stream()
+                        .map(SkillResponse::from)
                         .collect(Collectors.toList()))
                 .build();
     }

@@ -1,9 +1,13 @@
 package com.ratelo.blog.domain.skill;
 
-import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.api.dto.SkillUpdateRequest;
+import com.ratelo.blog.domain.image.Image;
+import com.ratelo.blog.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -29,6 +33,10 @@ public class Skill {
     @Column(length = 256)
     private String description;
 
+    @ManyToMany(mappedBy = "skills")
+    @Builder.Default
+    private Set<User> users = new HashSet<>();
+
     public void setLogo(Image logo) {
         this.logo = logo;
     }
@@ -38,5 +46,15 @@ public class Skill {
         this.level = request.getLevel();
         this.description = request.getDescription();
         this.setLogo(logo);
+    }
+
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getSkills().add(this);
+    }
+
+    public void removeUser(User user) {
+        this.users.remove(user);
+        user.getSkills().remove(this);
     }
 }

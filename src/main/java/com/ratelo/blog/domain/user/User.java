@@ -4,6 +4,7 @@ import com.ratelo.blog.api.dto.UserUpdateRequest;
 import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.post.Post;
+import com.ratelo.blog.domain.skill.Skill;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,7 +44,16 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Post> posts = new HashSet<>();
 
-    public void update(UserUpdateRequest request, Image profileImage, List<Career> careers) {
+    @ManyToMany
+    @JoinTable(
+        name = "user_skill",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    @Builder.Default
+    private Set<Skill> skills = new HashSet<>();
+
+    public void update(UserUpdateRequest request, Image profileImage, List<Career> careers, List<Skill> skills) {
         this.username = request.getUsername();
         this.name = request.getName();
         this.bio = request.getBio();
@@ -52,10 +62,29 @@ public class User {
         for (Career career : careers) {
             addCareer(career);
         }
+        this.skills.clear();
+        for (Skill skill : skills) {
+            addSkill(skill);
+        }
     }
 
     public void addCareer(Career career) {
         this.careers.add(career);
         career.setUser(this);
+    }
+
+    public void removeCareer(Career career) {
+        this.careers.remove(career);
+        career.setUser(null);
+    }
+
+    public void addSkill(Skill skill) {
+        this.skills.add(skill);
+        skill.getUsers().add(this);
+    }
+
+    public void removeSkill(Skill skill) {
+        this.skills.remove(skill);
+        skill.getUsers().remove(this);
     }
 }

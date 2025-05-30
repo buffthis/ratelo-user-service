@@ -10,9 +10,6 @@ import org.antlr.v4.runtime.misc.NotNull;
 @AllArgsConstructor
 public class CompanyUpdateRequest {
     @NotNull
-    private Long id;
-    @NotNull
     private String name;
-    private String description;
     private Long logoId;
 } 

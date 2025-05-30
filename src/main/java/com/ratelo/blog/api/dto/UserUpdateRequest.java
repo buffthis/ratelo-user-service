@@ -13,8 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class UserUpdateRequest {
     @NotNull
-    private Long id;
-    @NotNull
     private String username;
     @NotNull
     private String name;

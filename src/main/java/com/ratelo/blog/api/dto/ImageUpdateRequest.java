@@ -10,8 +10,6 @@ import org.antlr.v4.runtime.misc.NotNull;
 @AllArgsConstructor
 public class ImageUpdateRequest {
     @NotNull
-    private Long id;
-    @NotNull
     private String url;
     private String altText;
 } 

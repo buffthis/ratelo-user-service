@@ -2,7 +2,6 @@ package com.ratelo.blog.api.controller;
 
 import com.ratelo.blog.api.dto.CompanyResponse;
 import com.ratelo.blog.domain.company.CompanyService;
-import com.ratelo.blog.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,6 @@ import java.util.List;
 public class CompanyController {
 
     private final CompanyService companyService;
-    private final UserService userService;
 
     @GetMapping("/{id}")
     public CompanyResponse getCompanyById(@PathVariable Long id) {

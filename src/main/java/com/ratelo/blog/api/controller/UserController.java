@@ -21,7 +21,7 @@ public class UserController {
         return UserResponse.from(userService.getUserById(id));
     }
 
-    @GetMapping("/by-username/{id}")
+    @GetMapping("/by-username/{username}")
     public UserResponse getUserByUsername(@PathVariable String username) {
         return UserResponse.from(userService.getUserByUsername(username));
     }

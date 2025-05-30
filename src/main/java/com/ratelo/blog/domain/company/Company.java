@@ -24,6 +24,6 @@ public class Company {
 
     public void update(CompanyUpdateRequest request, Image logo) {
         this.name = request.getName();
-        this.logo = logo;
+        this.setLogo(logo);
     }
 }

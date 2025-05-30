@@ -4,6 +4,8 @@ import com.ratelo.blog.api.dto.PostCreateRequest;
 import com.ratelo.blog.api.dto.PostUpdateRequest;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
+import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.domain.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
+    private final UserRepository userRepository;
 
     public Post getPostById(Long id) {
         return postRepository.findById(id).orElse(null);
@@ -30,7 +33,12 @@ public class PostService {
             thumbnail = imageRepository.findById(request.getThumbnailId())
                 .orElseThrow(() -> new EntityNotFoundException("Thumbnail image not found with id: " + request.getThumbnailId()));
         }
-        return postRepository.save(request.toEntity(thumbnail));
+        User user = userRepository.findById(request.getUserId())
+            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
+        Post post = request.toEntity();
+        post.setThumbnail(thumbnail);
+        post.setUser(user);
+        return postRepository.save(post);
     }
 
     public Post updatePost(Long id, PostUpdateRequest request) {

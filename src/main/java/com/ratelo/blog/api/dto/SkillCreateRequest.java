@@ -1,22 +1,24 @@
 package com.ratelo.blog.api.dto;
 
-import com.ratelo.blog.domain.company.Company;
+import com.ratelo.blog.domain.skill.Skill;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyCreateRequest {
-    @NotNull
+public class SkillCreateRequest {
     private String name;
     private Long logoId;
+    private byte level;
+    private String description;
 
-    public Company toEntity() {
-        return Company.builder()
+    public Skill toEntity() {
+        return Skill.builder()
                 .name(name)
+                .level(level)
+                .description(description)
                 .build();
     }
 } 

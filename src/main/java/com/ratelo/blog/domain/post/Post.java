@@ -2,6 +2,7 @@ package com.ratelo.blog.domain.post;
 
 import com.ratelo.blog.api.dto.PostUpdateRequest;
 import com.ratelo.blog.domain.image.Image;
+import com.ratelo.blog.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +33,10 @@ public class Post {
     @JoinColumn(name = "thumbnail_id")
     private Image thumbnail;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
@@ -39,6 +44,11 @@ public class Post {
         this.title = request.getTitle();
         this.subtitle = request.getSubtitle();
         this.content = request.getContent();
-        this.thumbnail = thumbnail;
+        this.setThumbnail(thumbnail);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getPosts().add(this);
     }
 }

@@ -3,13 +3,16 @@ package com.ratelo.blog.domain.user;
 import com.ratelo.blog.api.dto.UserUpdateRequest;
 import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.image.Image;
+import com.ratelo.blog.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "users")
 @Getter
 @Setter
 @Builder
@@ -32,14 +35,19 @@ public class User {
     @Column(length = 64)
     private String bio;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Career> careers = new HashSet<>();
 
-    public void update(UserUpdateRequest request, Image profileImage, Set<Career> careers) {
+    @Builder.Default
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Post> posts = new HashSet<>();
+
+    public void update(UserUpdateRequest request, Image profileImage, List<Career> careers) {
         this.username = request.getUsername();
         this.name = request.getName();
         this.bio = request.getBio();
-        this.profileImage = profileImage;
+        this.setProfileImage(profileImage);
         this.careers.clear();
         for (Career career : careers) {
             addCareer(career);

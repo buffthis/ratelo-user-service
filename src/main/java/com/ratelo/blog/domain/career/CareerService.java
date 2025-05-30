@@ -29,11 +29,17 @@ public class CareerService {
     }
 
     public Career createCareer(CareerCreateRequest request) {
+        Career career = request.toEntity();
+
         Company company = companyRepository.findById(request.getCompanyId())
                 .orElseThrow(() -> new EntityNotFoundException("Company not found with id: " + request.getCompanyId()));
+        career.setCompany(company);
+
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
-        return careerRepository.save(request.toEntity(company, user)); 
+        career.setUser(user);
+
+        return careerRepository.save(career);
     }
 
     public Career updateCareer(Long id, CareerUpdateRequest request) {

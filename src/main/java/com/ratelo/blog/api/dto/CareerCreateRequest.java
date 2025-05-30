@@ -1,8 +1,6 @@
 package com.ratelo.blog.api.dto;
 
 import com.ratelo.blog.domain.career.Career;
-import com.ratelo.blog.domain.company.Company;
-import com.ratelo.blog.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,16 +34,14 @@ public class CareerCreateRequest {
     @NotNull
     private Long userId;
 
-    public Career toEntity(Company company, User user) {
+    public Career toEntity() {
         return Career.builder()
-                .company(company)
                 .team(team)
                 .position(position)
                 .startDate(startDate)
                 .endDate(endDate)
                 .periodNote(periodNote)
                 .description(description)
-                .user(user)
                 .build();
     }
 }

@@ -1,6 +1,5 @@
 package com.ratelo.blog.api.dto;
 
-import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,13 +14,14 @@ public class UserCreateRequest {
     private String username;
     @NotNull
     private String name;
+    private String bio;
     private Long profileImageId;
 
-    public User toEntity(Image profileImage) {
+    public User toEntity() {
         return User.builder()
                 .username(username)
                 .name(name)
-                .profileImage(profileImage)
+                .bio(bio)
                 .build();
     }
 }

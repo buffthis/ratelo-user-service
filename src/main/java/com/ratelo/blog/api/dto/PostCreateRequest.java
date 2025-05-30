@@ -1,6 +1,5 @@
 package com.ratelo.blog.api.dto;
 
-import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,13 +18,13 @@ public class PostCreateRequest {
     @NotNull
     private String content;
     private Long thumbnailId;
+    private Long userId;
 
-    public Post toEntity(Image thumbnail) {
+    public Post toEntity() {
         return Post.builder()
                 .title(title)
                 .subtitle(subtitle)
                 .content(content)
-                .thumbnail(thumbnail)
                 .createdAt(LocalDateTime.now())
                 .build();
     }

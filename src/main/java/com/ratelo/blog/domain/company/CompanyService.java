@@ -26,10 +26,13 @@ public class CompanyService {
     }
 
     public Company createCompany(CompanyCreateRequest request) {
-        
+        Company company = request.toEntity();
+
         Image logo = imageRepository.findById(request.getLogoId())
             .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
-        return companyRepository.save(request.toEntity(logo));
+        company.setLogo(logo);
+
+        return companyRepository.save(company);
     }
 
     public Company updateCompany(Long id, CompanyUpdateRequest request) {

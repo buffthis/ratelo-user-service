@@ -48,7 +48,7 @@ public class Career {
     private User user;
 
     public void update(CareerUpdateRequest request, Company company) {
-        this.company = company;
+        this.setCompany(company);
         this.team = request.getTeam();
         this.position = request.getPosition();
         this.startDate = request.getStartDate();

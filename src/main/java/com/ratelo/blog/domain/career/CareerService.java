@@ -43,10 +43,7 @@ public class CareerService {
         Company company = companyRepository.findById(request.getCompanyId())
             .orElseThrow(() -> new EntityNotFoundException("Company not found with id: " + request.getCompanyId()));
 
-        User user = userRepository.findById(request.getUserId())
-            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
-
-        career.update(request, company, user);
+        career.update(request, company);
         return careerRepository.save(career);
     }
 }

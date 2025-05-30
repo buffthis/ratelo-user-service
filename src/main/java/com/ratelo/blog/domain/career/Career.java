@@ -40,7 +40,7 @@ public class Career {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void update(CareerUpdateRequest request, Company company, User user) {
+    public void update(CareerUpdateRequest request, Company company) {
         this.company = company;
         this.team = request.getTeam();
         this.position = request.getPosition();

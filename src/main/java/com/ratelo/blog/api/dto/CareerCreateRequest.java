@@ -43,6 +43,7 @@ public class CareerCreateRequest {
                 .position(position)
                 .startDate(startDate)
                 .endDate(endDate)
+                .periodNote(periodNote)
                 .description(description)
                 .user(user)
                 .build();

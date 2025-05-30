@@ -1,8 +1,6 @@
 package com.ratelo.blog.api.controller;
 
-import com.ratelo.blog.api.dto.UserCreateRequest;
-import com.ratelo.blog.api.dto.UserResponse;
-import com.ratelo.blog.api.dto.UserUpdateRequest;
+import com.ratelo.blog.api.dto.*;
 import com.ratelo.blog.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +39,26 @@ public class UserController {
             @PathVariable Long id,
             @RequestBody UserUpdateRequest request) {
         return UserResponse.from(userService.updateUser(id, request));
+    }
+
+    @PatchMapping("/{id}/profile-image")
+    public UserResponse updateProfileImage(
+            @PathVariable Long id,
+            @RequestBody UserProfileImageUpdateRequest request) {
+        return UserResponse.from(userService.updateProfileImage(id, request));
+    }
+
+    @PatchMapping("/{id}/careers")
+    public UserResponse updateCareers(
+            @PathVariable Long id,
+            @RequestBody UserCareersUpdateRequest request) {
+        return UserResponse.from(userService.updateCareers(id, request));
+    }
+
+    @PatchMapping("/{id}/skills")
+    public UserResponse updateSkills(
+            @PathVariable Long id,
+            @RequestBody UserSkillsUpdateRequest request) {
+        return UserResponse.from(userService.updateSkills(id, request));
     }
 }

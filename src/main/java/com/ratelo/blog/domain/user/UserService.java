@@ -1,7 +1,6 @@
 package com.ratelo.blog.domain.user;
 
-import com.ratelo.blog.api.dto.UserCreateRequest;
-import com.ratelo.blog.api.dto.UserUpdateRequest;
+import com.ratelo.blog.api.dto.*;
 import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.career.CareerRepository;
 import com.ratelo.blog.domain.image.Image;
@@ -44,7 +43,7 @@ public class UserService {
         Image profileImage = null;
         if (request.getProfileImageId() != null) {
             profileImage = imageRepository.findById(request.getProfileImageId())
-                .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
             user.setProfileImage(profileImage);
         }
         return userRepository.save(user);
@@ -56,11 +55,37 @@ public class UserService {
         Image profileImage = null;
         if (request.getProfileImageId() != null) {
             profileImage = imageRepository.findById(request.getProfileImageId())
-                .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
         }
         List<Career> careers = careerRepository.findByIdIn(request.getCareerIds());
         List<Skill> skills = skillRepository.findAllById(request.getSkillIds());
         user.update(request, profileImage, careers, skills);
+        return userRepository.save(user);
+    }
+
+    public User updateProfileImage(Long userId, UserProfileImageUpdateRequest request) {
+        Long profileImageId = request.getProfileImageId();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        Image profileImage = imageRepository.findById(profileImageId)
+                .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + profileImageId));
+        user.setProfileImage(profileImage);
+        return userRepository.save(user);
+    }
+
+    public User updateCareers(Long userId, UserCareersUpdateRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        List<Career> careers = careerRepository.findByIdIn(request.getCareerIds());
+        user.setCareers(careers);
+        return userRepository.save(user);
+    }
+
+    public User updateSkills(Long userId, UserSkillsUpdateRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        List<Skill> skills = skillRepository.findAllById(request.getSkillIds());
+        user.setSkills(skills);
         return userRepository.save(user);
     }
 }

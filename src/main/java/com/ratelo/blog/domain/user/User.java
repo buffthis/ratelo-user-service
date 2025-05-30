@@ -58,14 +58,8 @@ public class User {
         this.name = request.getName();
         this.bio = request.getBio();
         this.setProfileImage(profileImage);
-        this.careers.clear();
-        for (Career career : careers) {
-            addCareer(career);
-        }
-        this.skills.clear();
-        for (Skill skill : skills) {
-            addSkill(skill);
-        }
+        this.setCareers(careers);
+        this.setSkills(skills);
     }
 
     public void addCareer(Career career) {
@@ -86,5 +80,23 @@ public class User {
     public void removeSkill(Skill skill) {
         this.skills.remove(skill);
         skill.getUsers().remove(this);
+    }
+
+    public void setProfileImage(Image profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public void setCareers(List<Career> careers) {
+        this.careers.clear();
+        for (Career career : careers) {
+            addCareer(career);
+        }
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills.clear();
+        for (Skill skill : skills) {
+            addSkill(skill);
+        }
     }
 }

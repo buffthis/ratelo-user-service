@@ -38,16 +38,22 @@ public class UserService {
     }
 
     public User createUser(UserCreateRequest request) {
-        Image profileImage = imageRepository.findById(request.getProfileImageId())
+        Image profileImage = null;
+        if (request.getProfileImageId() != null) {
+            profileImage = imageRepository.findById(request.getProfileImageId())
                 .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
+        }
         return userRepository.save(request.toEntity(profileImage));
     }
 
     public User updateUser(Long id, UserUpdateRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
-        Image profileImage = imageRepository.findById(request.getProfileImageId())
+        Image profileImage = null;
+        if (request.getProfileImageId() != null) {
+            profileImage = imageRepository.findById(request.getProfileImageId())
                 .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
+        }
         List<Career> careers = careerRepository.findByIdIn(request.getCareerIds());
         user.update(request, profileImage, new HashSet<>(careers));
         return userRepository.save(user);

@@ -18,7 +18,7 @@ public class Company {
 
     private String name;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "logo_id")
     private Image logo;
 

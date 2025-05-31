@@ -1,9 +1,9 @@
 package com.ratelo.blog.domain.skill;
 
-import com.ratelo.blog.api.dto.SkillCreateRequest;
-import com.ratelo.blog.api.dto.SkillUpdateRequest;
-import com.ratelo.blog.domain.image.Image;
-import com.ratelo.blog.domain.image.ImageRepository;
+import com.ratelo.blog.domain.tool.Tool;
+import com.ratelo.blog.domain.tool.ToolRepository;
+import com.ratelo.blog.dto.skill.SkillCreateRequest;
+import com.ratelo.blog.dto.skill.SkillUpdateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SkillService {
     private final SkillRepository skillRepository;
-    private final ImageRepository imageRepository;
+    private final ToolRepository toolRepository;
 
     public Skill getSkillById(Long id) {
         return skillRepository.findById(id).orElse(null);
@@ -26,23 +26,18 @@ public class SkillService {
 
     public Skill createSkill(SkillCreateRequest request) {
         Skill skill = request.toEntity();
-        if (request.getLogoId() != null) {
-            Image logo = imageRepository.findById(request.getLogoId())
-                    .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
-            skill.setLogo(logo);
-        }
+        Tool tool = toolRepository.findById(request.getToolId())
+                .orElseThrow(() -> new EntityNotFoundException("Tool not found with id: " + request.getToolId()));
+        skill.setTool(tool);
         return skillRepository.save(skill);
     }
 
     public Skill updateSkill(Long id, SkillUpdateRequest request) {
         Skill skill = skillRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Skill not found with id: " + id));
-        Image logo = null;
-        if (request.getLogoId() != null) {
-            logo = imageRepository.findById(request.getLogoId())
-                    .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
-        }
-        skill.update(request, logo);
+        Tool tool = toolRepository.findById(request.getToolId())
+                .orElseThrow(() -> new EntityNotFoundException("Tool not found with id: " + request.getToolId()));
+        skill.update(request, tool);
         return skillRepository.save(skill);
     }
 } 

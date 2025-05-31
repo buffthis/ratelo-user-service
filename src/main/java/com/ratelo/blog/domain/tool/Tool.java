@@ -1,7 +1,7 @@
-package com.ratelo.blog.domain.company;
+package com.ratelo.blog.domain.tool;
 
 import com.ratelo.blog.domain.image.Image;
-import com.ratelo.blog.dto.company.CompanyUpdateRequest;
+import com.ratelo.blog.dto.tool.ToolUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Company {
+public class Tool {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +22,7 @@ public class Company {
     @JoinColumn(name = "logo_id")
     private Image logo;
 
-    public void update(CompanyUpdateRequest request, Image logo) {
+    public void update(ToolUpdateRequest request, Image logo) {
         this.name = request.getName();
         this.setLogo(logo);
     }

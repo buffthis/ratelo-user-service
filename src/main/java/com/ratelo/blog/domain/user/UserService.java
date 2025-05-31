@@ -1,12 +1,12 @@
 package com.ratelo.blog.domain.user;
 
-import com.ratelo.blog.api.dto.*;
 import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.career.CareerRepository;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
 import com.ratelo.blog.domain.skill.Skill;
 import com.ratelo.blog.domain.skill.SkillRepository;
+import com.ratelo.blog.dto.user.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

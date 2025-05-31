@@ -1,7 +1,7 @@
 package com.ratelo.blog.domain.image;
 
-import com.ratelo.blog.api.dto.ImageCreateRequest;
-import com.ratelo.blog.api.dto.ImageUpdateRequest;
+import com.ratelo.blog.dto.image.ImageCreateRequest;
+import com.ratelo.blog.dto.image.ImageUpdateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

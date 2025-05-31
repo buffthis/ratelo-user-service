@@ -1,11 +1,11 @@
 package com.ratelo.blog.domain.user;
 
-import com.ratelo.blog.api.dto.UserUpdateRequest;
 import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.post.Post;
 import com.ratelo.blog.domain.project.Project;
 import com.ratelo.blog.domain.skill.Skill;
+import com.ratelo.blog.dto.user.UserUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -80,12 +80,12 @@ public class User {
 
     public void addSkill(Skill skill) {
         this.skills.add(skill);
-        skill.getUsers().add(this);
+        skill.setUser(this);
     }
 
     public void removeSkill(Skill skill) {
         this.skills.remove(skill);
-        skill.getUsers().remove(this);
+        skill.setUser(null);
     }
 
     public void setProfileImage(Image profileImage) {

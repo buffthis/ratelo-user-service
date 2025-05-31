@@ -1,6 +1,6 @@
 package com.ratelo.blog.domain.image;
 
-import com.ratelo.blog.api.dto.ImageUpdateRequest;
+import com.ratelo.blog.dto.image.ImageUpdateRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

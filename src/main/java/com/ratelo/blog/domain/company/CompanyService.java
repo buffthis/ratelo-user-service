@@ -1,9 +1,9 @@
 package com.ratelo.blog.domain.company;
 
-import com.ratelo.blog.api.dto.CompanyCreateRequest;
-import com.ratelo.blog.api.dto.CompanyUpdateRequest;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
+import com.ratelo.blog.dto.company.CompanyCreateRequest;
+import com.ratelo.blog.dto.company.CompanyUpdateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

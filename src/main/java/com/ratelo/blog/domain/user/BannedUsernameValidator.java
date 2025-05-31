@@ -2,6 +2,7 @@ package com.ratelo.blog.domain.user;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+
 import java.util.Arrays;
 
 public class BannedUsernameValidator implements ConstraintValidator<BannedUsername, String> {

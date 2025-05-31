@@ -1,8 +1,8 @@
 package com.ratelo.blog.domain.career;
 
-import com.ratelo.blog.api.dto.CareerUpdateRequest;
 import com.ratelo.blog.domain.company.Company;
 import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.dto.career.CareerUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -60,5 +60,10 @@ public class Career {
     public void setUser(User user) {
         this.user = user;
         user.getCareers().add(this);
+    }
+
+    public void removeUser(User user) {
+        this.user = null;
+        user.getCareers().remove(this);
     }
 }

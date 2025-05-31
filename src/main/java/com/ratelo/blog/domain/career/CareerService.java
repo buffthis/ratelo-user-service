@@ -1,11 +1,11 @@
 package com.ratelo.blog.domain.career;
 
-import com.ratelo.blog.api.dto.CareerCreateRequest;
-import com.ratelo.blog.api.dto.CareerUpdateRequest;
 import com.ratelo.blog.domain.company.Company;
 import com.ratelo.blog.domain.company.CompanyRepository;
 import com.ratelo.blog.domain.user.User;
 import com.ratelo.blog.domain.user.UserRepository;
+import com.ratelo.blog.dto.career.CareerCreateRequest;
+import com.ratelo.blog.dto.career.CareerUpdateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

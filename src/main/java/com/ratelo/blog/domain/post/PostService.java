@@ -1,11 +1,11 @@
 package com.ratelo.blog.domain.post;
 
-import com.ratelo.blog.api.dto.PostCreateRequest;
-import com.ratelo.blog.api.dto.PostUpdateRequest;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
 import com.ratelo.blog.domain.user.User;
 import com.ratelo.blog.domain.user.UserRepository;
+import com.ratelo.blog.dto.post.PostCreateRequest;
+import com.ratelo.blog.dto.post.PostUpdateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,11 @@
 package com.ratelo.blog.domain.project;
 
-import com.ratelo.blog.api.dto.ProjectUpdateRequest;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.dto.project.ProjectUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;

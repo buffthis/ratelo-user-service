@@ -1,8 +1,8 @@
 package com.ratelo.blog.domain.post;
 
-import com.ratelo.blog.api.dto.PostUpdateRequest;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.dto.post.PostUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 

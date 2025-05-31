@@ -1,17 +1,18 @@
 package com.ratelo.blog.domain.project;
 
-import com.ratelo.blog.api.dto.ProjectCreateRequest;
-import com.ratelo.blog.api.dto.ProjectUpdateRequest;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
 import com.ratelo.blog.domain.user.User;
 import com.ratelo.blog.domain.user.UserRepository;
+import com.ratelo.blog.dto.project.ProjectCreateRequest;
+import com.ratelo.blog.dto.project.ProjectUpdateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
 
 @Service
 @RequiredArgsConstructor

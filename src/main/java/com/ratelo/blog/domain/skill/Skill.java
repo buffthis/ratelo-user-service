@@ -1,13 +1,10 @@
 package com.ratelo.blog.domain.skill;
 
-import com.ratelo.blog.api.dto.SkillUpdateRequest;
-import com.ratelo.blog.domain.image.Image;
+import com.ratelo.blog.domain.tool.Tool;
 import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.dto.skill.SkillUpdateRequest;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -20,12 +17,9 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 16)
-    private String name;
-
-    @OneToOne
-    @JoinColumn(name = "logo_id")
-    private Image logo;
+    @ManyToOne
+    @JoinColumn(name = "tool_id")
+    private Tool tool;
     
     @Column(nullable = false)
     private byte level;
@@ -33,28 +27,23 @@ public class Skill {
     @Column(length = 256)
     private String description;
 
-    @ManyToMany(mappedBy = "skills")
-    @Builder.Default
-    private Set<User> users = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public void setLogo(Image logo) {
-        this.logo = logo;
-    }
-
-    public void update(SkillUpdateRequest request, Image logo) {
-        this.name = request.getName();
+    public void update(SkillUpdateRequest request, Tool tool) {
+        this.setTool(tool);
         this.level = request.getLevel();
         this.description = request.getDescription();
-        this.setLogo(logo);
     }
 
-    public void addUser(User user) {
-        this.users.add(user);
+    public void setUser(User user) {
+        this.user = user;
         user.getSkills().add(this);
     }
 
     public void removeUser(User user) {
-        this.users.remove(user);
+        this.user = null;
         user.getSkills().remove(this);
     }
 }

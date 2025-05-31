@@ -5,6 +5,7 @@ import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.post.Post;
 import com.ratelo.blog.domain.skill.Skill;
+import com.ratelo.blog.domain.project.Project;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -53,6 +54,10 @@ public class User {
     @Builder.Default
     private Set<Skill> skills = new HashSet<>();
 
+    @ManyToMany(mappedBy = "participants")
+    @Builder.Default
+    private Set<Project> projects = new HashSet<>();
+
     public void update(UserUpdateRequest request, Image profileImage, List<Career> careers, List<Skill> skills) {
         this.username = request.getUsername();
         this.name = request.getName();
@@ -98,5 +103,15 @@ public class User {
         for (Skill skill : skills) {
             addSkill(skill);
         }
+    }
+
+    public void addProject(Project project) {
+        this.projects.add(project);
+        project.getParticipants().add(this);
+    }
+
+    public void removeProject(Project project) {
+        this.projects.remove(project);
+        project.getParticipants().remove(this);
     }
 }

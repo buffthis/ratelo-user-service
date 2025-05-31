@@ -4,6 +4,7 @@ import com.ratelo.blog.domain.skill.Skill;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -12,6 +13,9 @@ public class SkillCreateRequest {
     private Long toolId;
     private byte level;
     private String description;
+
+    @NotNull
+    private Long userId;
 
     public Skill toEntity() {
         return Skill.builder()

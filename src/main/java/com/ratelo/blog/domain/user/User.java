@@ -4,8 +4,8 @@ import com.ratelo.blog.api.dto.UserUpdateRequest;
 import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.post.Post;
-import com.ratelo.blog.domain.skill.Skill;
 import com.ratelo.blog.domain.project.Project;
+import com.ratelo.blog.domain.skill.Skill;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,8 +25,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     @BannedUsername(value = {"user", "admin", "root", "system"})
     private String username;
 

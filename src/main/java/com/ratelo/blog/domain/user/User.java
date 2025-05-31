@@ -25,7 +25,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(unique = true)
+    @BannedUsername(value = {"user", "admin", "root", "system"})
     private String username;
 
     private String name;

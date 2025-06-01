@@ -3,6 +3,8 @@ package com.ratelo.blog.dto.user;
 import com.ratelo.blog.domain.user.User;
 import com.ratelo.blog.dto.career.CareerResponse;
 import com.ratelo.blog.dto.image.ImageResponse;
+import com.ratelo.blog.dto.post.PostSummaryResponse;
+import com.ratelo.blog.dto.project.ProjectSummaryResponse;
 import com.ratelo.blog.dto.skill.SkillResponse;
 import lombok.*;
 
@@ -24,6 +26,8 @@ public class UserResponse {
     private ImageResponse profileImage;
     private List<CareerResponse> careers;
     private List<SkillResponse> skills;
+    private List<ProjectSummaryResponse> projectSummaries;
+    private List<PostSummaryResponse> postSummaries;
 
     public static UserResponse from(User user) {
         return UserResponse.builder()
@@ -43,7 +47,18 @@ public class UserResponse {
                         .stream()
                         .map(SkillResponse::from)
                         .collect(Collectors.toList()))
+                .projectSummaries(Optional.ofNullable(user.getProjects())
+                        .orElse(Set.of())
+                        .stream()
+                        .map(ProjectSummaryResponse::from)
+                        .collect(Collectors.toList()))
+                .postSummaries(Optional.ofNullable(user.getPosts())
+                        .orElse(Set.of())
+                        .stream()
+                        .map(PostSummaryResponse::from)
+                        .collect(Collectors.toList()))
                 .build();
+
     }
 
     public static List<UserResponse> from(List<User> users) {

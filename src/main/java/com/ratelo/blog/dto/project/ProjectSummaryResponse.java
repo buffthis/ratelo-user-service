@@ -18,7 +18,6 @@ public class ProjectSummaryResponse {
     private Long id;
     private String title;
     private String subtitle;
-    private String content;
     private ImageResponse thumbnail;
     private LocalDateTime createdAt;
     private LocalDateTime startDate;
@@ -32,7 +31,6 @@ public class ProjectSummaryResponse {
                 .id(project.getId())
                 .title(project.getTitle())
                 .subtitle(project.getSubtitle())
-                .content(project.getContent())
                 .thumbnail(ImageResponse.from(project.getThumbnail()))
                 .createdAt(project.getCreatedAt())
                 .startDate(project.getStartDate())

@@ -15,4 +15,6 @@ public class PostUpdateRequest {
     @NotNull
     private String content;
     private Long thumbnailId;
+    private String externalUrl;
+
 } 

@@ -19,6 +19,7 @@ public class PostCreateRequest {
     private String content;
     private Long thumbnailId;
     private Long userId;
+    private String externalUrl;
 
     public Post toEntity() {
         return Post.builder()

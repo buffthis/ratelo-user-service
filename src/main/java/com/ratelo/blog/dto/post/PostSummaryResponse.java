@@ -18,6 +18,7 @@ public class PostSummaryResponse {
     private String subtitle;
     private ImageResponse thumbnail;
     private LocalDateTime createdAt;
+    private String externalUrl;
 
     public static PostSummaryResponse from(Post post) {
         if (post == null) return null;
@@ -27,6 +28,7 @@ public class PostSummaryResponse {
                 .subtitle(post.getSubtitle())
                 .thumbnail(ImageResponse.from(post.getThumbnail()))
                 .createdAt(post.getCreatedAt())
+                .externalUrl(post.getExternalUrl())
                 .build();
     }
 

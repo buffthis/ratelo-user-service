@@ -40,10 +40,13 @@ public class Post {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    private String externalUrl;
+
     public void update(PostUpdateRequest request, Image thumbnail) {
         this.title = request.getTitle();
         this.subtitle = request.getSubtitle();
         this.content = request.getContent();
+        this.externalUrl = request.getExternalUrl();
         this.setThumbnail(thumbnail);
     }
 

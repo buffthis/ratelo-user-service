@@ -52,6 +52,8 @@ public class Project {
     private LocalDateTime endDate;
     private String periodNote;
 
+    private String externalUrl;
+
     public void update(ProjectUpdateRequest request, Image thumbnail) {
         this.title = request.getTitle();
         this.subtitle = request.getSubtitle();
@@ -60,6 +62,7 @@ public class Project {
         this.startDate = request.getStartDate();
         this.endDate = request.getEndDate();
         this.periodNote = request.getPeriodNote();
+        this.externalUrl = request.getExternalUrl();
     }
 
     public void addParticipant(User user) {

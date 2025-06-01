@@ -24,6 +24,7 @@ public class ProjectSummaryResponse {
     private LocalDateTime endDate;
     private String periodNote;
     private List<UserResponse> participants;
+    private String externalUrl;
 
     public static ProjectSummaryResponse from(Project project) {
         if (project == null) return null;
@@ -37,6 +38,7 @@ public class ProjectSummaryResponse {
                 .endDate(project.getEndDate())
                 .periodNote(project.getPeriodNote())
                 .participants(project.getParticipants() == null ? List.of() : project.getParticipants().stream().map(UserResponse::from).collect(Collectors.toList()))
+                .externalUrl(project.getExternalUrl())
                 .build();
     }
 

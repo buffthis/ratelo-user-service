@@ -19,6 +19,7 @@ public class PostResponse {
     private String content;
     private ImageResponse thumbnail;
     private LocalDateTime createdAt;
+    private String externalUrl;
 
     public static PostResponse from(Post post) {
         if (post == null) return null;
@@ -29,6 +30,7 @@ public class PostResponse {
                 .content(post.getContent())
                 .thumbnail(ImageResponse.from(post.getThumbnail()))
                 .createdAt(post.getCreatedAt())
+                .externalUrl(post.getExternalUrl())
                 .build();
     }
 

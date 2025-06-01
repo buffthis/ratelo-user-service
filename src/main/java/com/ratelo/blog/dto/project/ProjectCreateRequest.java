@@ -23,6 +23,7 @@ public class ProjectCreateRequest {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String periodNote;
+    private String externalUrl;
 
     public Project toEntity() {
         return Project.builder()

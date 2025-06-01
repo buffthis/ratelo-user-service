@@ -22,4 +22,6 @@ public class ProjectUpdateRequest {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String periodNote;
+    private String externalUrl;
+
 } 

@@ -27,6 +27,7 @@ public class PostCreateRequest {
                 .subtitle(subtitle)
                 .content(content)
                 .createdAt(LocalDateTime.now())
+                .externalUrl(externalUrl)
                 .build();
     }
 } 

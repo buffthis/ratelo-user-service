@@ -17,4 +17,5 @@ public class CareerPatchRequest {
     private String description;
     private Long userId;
     private Boolean hidden;
-} 
+    private Boolean masked;
+}

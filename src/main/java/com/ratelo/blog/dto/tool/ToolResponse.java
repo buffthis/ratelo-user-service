@@ -16,7 +16,6 @@ public class ToolResponse {
     private Long id;
     private String name;
     private ImageResponse logo;
-    private Boolean hidden;
 
     public static ToolResponse from(Tool tool) {
         if (tool == null) return null;
@@ -24,7 +23,6 @@ public class ToolResponse {
                 .id(tool.getId())
                 .name(tool.getName())
                 .logo(ImageResponse.from(tool.getLogo()))
-                .hidden(tool.isHidden())
                 .build();
     }
 

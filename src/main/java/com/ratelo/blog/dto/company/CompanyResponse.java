@@ -16,7 +16,6 @@ public class CompanyResponse {
     private Long id;
     private String name;
     private ImageResponse logo;
-    private Boolean hidden;
 
     public static CompanyResponse from(Company company) {
         if (company == null) return null;
@@ -24,7 +23,6 @@ public class CompanyResponse {
                 .id(company.getId())
                 .name(company.getName())
                 .logo(ImageResponse.from(company.getLogo()))
-                .hidden(company.isHidden())
                 .build();
     }
 

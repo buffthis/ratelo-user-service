@@ -22,10 +22,6 @@ public class Company {
     @JoinColumn(name = "logo_id")
     private Image logo;
 
-    @Column(nullable = false)
-    @Builder.Default
-    private boolean hidden = false;
-
     public void update(CompanyUpdateRequest request, Image logo) {
         this.name = request.getName();
         this.setLogo(logo);

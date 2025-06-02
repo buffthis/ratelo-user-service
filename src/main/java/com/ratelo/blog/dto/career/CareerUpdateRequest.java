@@ -34,4 +34,5 @@ public class CareerUpdateRequest {
     private String description;
 
     private Boolean hidden;
+    private Boolean masked;
 }

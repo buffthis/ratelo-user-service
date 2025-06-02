@@ -67,6 +67,7 @@ public class Project {
         this.endDate = request.getEndDate();
         this.periodNote = request.getPeriodNote();
         this.externalUrl = request.getExternalUrl();
+        this.hidden = request.getHidden();
     }
 
     public void addParticipant(User user) {

@@ -23,5 +23,6 @@ public class ProjectUpdateRequest {
     private LocalDateTime endDate;
     private String periodNote;
     private String externalUrl;
+    private Boolean hidden;
 
 } 

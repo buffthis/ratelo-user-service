@@ -16,5 +16,6 @@ public class PostUpdateRequest {
     private String content;
     private Long thumbnailId;
     private String externalUrl;
+    private Boolean hidden;
 
 } 

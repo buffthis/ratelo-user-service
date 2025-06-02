@@ -35,6 +35,10 @@ public class Skill {
     @Builder.Default
     private boolean hidden = false;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean masked = false;
+
     public void update(SkillUpdateRequest request, Tool tool) {
         this.setTool(tool);
         this.level = request.getLevel();

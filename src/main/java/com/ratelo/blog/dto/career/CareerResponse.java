@@ -23,6 +23,7 @@ public class CareerResponse {
     private String periodNote;
     private String description;
     private Boolean hidden;
+    private Boolean masked;
 
     public static CareerResponse from(Career career) {
         return CareerResponse.builder()
@@ -35,6 +36,7 @@ public class CareerResponse {
                 .periodNote(career.getPeriodNote())
                 .description(career.getDescription())
                 .hidden(career.isHidden())
+                .masked(career.isMasked())
                 .build();
     }
 

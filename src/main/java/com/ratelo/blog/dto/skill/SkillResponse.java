@@ -17,6 +17,7 @@ public class SkillResponse {
     private byte level;
     private String description;
     private Boolean hidden;
+    private Boolean masked;
 
     public static SkillResponse from(Skill skill) {
         if (skill == null) return null;
@@ -26,6 +27,7 @@ public class SkillResponse {
                 .level(skill.getLevel())
                 .description(skill.getDescription())
                 .hidden(skill.isHidden())
+                .masked(skill.isMasked())
                 .build();
     }
 

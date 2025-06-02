@@ -51,6 +51,7 @@ public class Post {
         this.subtitle = request.getSubtitle();
         this.content = request.getContent();
         this.externalUrl = request.getExternalUrl();
+        this.hidden = request.getHidden();
         this.setThumbnail(thumbnail);
     }
 

@@ -31,6 +31,8 @@ public class CareerCreateRequest {
 
     private String description;
 
+    private Boolean hidden;
+
     @NotNull
     private Long userId;
 
@@ -42,6 +44,7 @@ public class CareerCreateRequest {
                 .endDate(endDate)
                 .periodNote(periodNote)
                 .description(description)
+                .hidden(hidden)
                 .build();
     }
 }

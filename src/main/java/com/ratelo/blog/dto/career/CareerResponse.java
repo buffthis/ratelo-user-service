@@ -22,7 +22,7 @@ public class CareerResponse {
     private LocalDate endDate;
     private String periodNote;
     private String description;
-    private Boolean isHidden;
+    private Boolean hidden;
 
     public static CareerResponse from(Career career) {
         return CareerResponse.builder()
@@ -34,7 +34,7 @@ public class CareerResponse {
                 .endDate(career.getEndDate())
                 .periodNote(career.getPeriodNote())
                 .description(career.getDescription())
-                .isHidden(career.isHidden())
+                .hidden(career.isHidden())
                 .build();
     }
 

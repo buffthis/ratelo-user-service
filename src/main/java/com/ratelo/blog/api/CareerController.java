@@ -2,6 +2,7 @@ package com.ratelo.blog.api;
 
 import com.ratelo.blog.domain.career.CareerService;
 import com.ratelo.blog.dto.career.CareerCreateRequest;
+import com.ratelo.blog.dto.career.CareerPatchRequest;
 import com.ratelo.blog.dto.career.CareerResponse;
 import com.ratelo.blog.dto.career.CareerUpdateRequest;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,10 @@ public class CareerController {
             @PathVariable Long id,
             @RequestBody CareerUpdateRequest request) {
         return CareerResponse.from(careerService.updateCareer(id, request));
+    }
+
+    @PatchMapping("/{id}")
+    public CareerResponse patchCareer(@PathVariable Long id, @RequestBody CareerPatchRequest request) {
+        return CareerResponse.from(careerService.patchCareer(id, request));
     }
 }

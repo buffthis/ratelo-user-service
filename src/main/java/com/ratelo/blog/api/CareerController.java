@@ -23,8 +23,10 @@ public class CareerController {
     }
 
     @GetMapping
-    public List<CareerResponse> getAllCareers() {
-        return CareerResponse.from(careerService.getAllCareers());
+    public List<CareerResponse> getAllCareers(
+            @RequestParam(required = false) Boolean includeHidden,
+            @RequestParam(required = false) Long userId) {
+        return CareerResponse.from(careerService.getAllCareers(includeHidden, userId));
     }
 
     @PostMapping

@@ -15,11 +15,14 @@ public class CareerRepositoryImpl implements CareerRepositoryCustom {
     }
 
     @Override
-    public List<Career> findAllWithHiddenOption(Boolean includeHidden) {
+    public List<Career> findAllByCondition(Boolean includeHidden, Long userId) {
         QCareer career = QCareer.career;
         BooleanBuilder builder = new BooleanBuilder();
         if (includeHidden == null || !includeHidden) {
             builder.and(career.hidden.eq(false));
+        }
+        if (userId != null) {
+            builder.and(career.user.id.eq(userId));
         }
         return queryFactory.selectFrom(career)
                 .where(builder)

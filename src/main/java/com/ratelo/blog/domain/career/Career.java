@@ -47,6 +47,10 @@ public class Career {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isHidden = false;
+
     public void update(CareerUpdateRequest request, Company company) {
         this.setCompany(company);
         this.team = request.getTeam();

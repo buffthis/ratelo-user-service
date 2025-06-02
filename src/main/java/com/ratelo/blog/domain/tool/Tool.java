@@ -22,6 +22,10 @@ public class Tool {
     @JoinColumn(name = "logo_id")
     private Image logo;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isHidden = false;
+
     public void update(ToolUpdateRequest request, Image logo) {
         this.name = request.getName();
         this.setLogo(logo);

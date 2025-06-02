@@ -31,6 +31,10 @@ public class Skill {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isHidden = false;
+
     public void update(SkillUpdateRequest request, Tool tool) {
         this.setTool(tool);
         this.level = request.getLevel();

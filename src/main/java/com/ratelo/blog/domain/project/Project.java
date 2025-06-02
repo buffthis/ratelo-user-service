@@ -54,6 +54,10 @@ public class Project {
 
     private String externalUrl;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isHidden = false;
+
     public void update(ProjectUpdateRequest request, Image thumbnail) {
         this.title = request.getTitle();
         this.subtitle = request.getSubtitle();

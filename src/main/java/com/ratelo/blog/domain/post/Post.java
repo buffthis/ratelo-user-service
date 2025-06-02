@@ -42,6 +42,10 @@ public class Post {
 
     private String externalUrl;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isHidden = false;
+
     public void update(PostUpdateRequest request, Image thumbnail) {
         this.title = request.getTitle();
         this.subtitle = request.getSubtitle();

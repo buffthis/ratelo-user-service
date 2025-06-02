@@ -25,7 +25,7 @@ public class CareerService {
     }
 
     public List<Career> getAllCareers() {
-        return careerRepository.findAll();
+        return careerRepository.findAllWithHiddenOption(false);
     }
 
     public Career createCareer(CareerCreateRequest request) {

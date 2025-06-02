@@ -49,7 +49,7 @@ public class Career {
 
     @Column(nullable = false)
     @Builder.Default
-    private boolean isHidden = false;
+    private boolean hidden = false;
 
     public void update(CareerUpdateRequest request, Company company) {
         this.setCompany(company);
@@ -59,6 +59,7 @@ public class Career {
         this.endDate = request.getEndDate();
         this.periodNote = request.getPeriodNote();
         this.description = request.getDescription();
+        this.hidden = request.getHidden();
     }
 
     public void setUser(User user) {

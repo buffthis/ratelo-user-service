@@ -1,8 +1,9 @@
 package com.ratelo.blog.dto.career;
 
-import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,5 +16,5 @@ public class CareerPatchRequest {
     private String periodNote;
     private String description;
     private Long userId;
-    private Boolean isHidden;
+    private Boolean hidden;
 } 

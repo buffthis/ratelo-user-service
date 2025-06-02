@@ -19,7 +19,7 @@ public class CareerRepositoryImpl implements CareerRepositoryCustom {
         QCareer career = QCareer.career;
         BooleanBuilder builder = new BooleanBuilder();
         if (includeHidden == null || !includeHidden) {
-            builder.and(career.isHidden.eq(false));
+            builder.and(career.hidden.eq(false));
         }
         return queryFactory.selectFrom(career)
                 .where(builder)

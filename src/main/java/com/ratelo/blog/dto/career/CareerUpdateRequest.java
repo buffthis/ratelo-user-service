@@ -32,4 +32,6 @@ public class CareerUpdateRequest {
     private String periodNote;
 
     private String description;
+
+    private Boolean hidden;
 }

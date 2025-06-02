@@ -64,6 +64,7 @@ class CareerControllerTest {
         CareerPatchRequest patchRequest = new CareerPatchRequest();
         patchRequest.setTeam("updatedTeam");
         patchRequest.setPosition("updatedPosition");
+        patchRequest.setHidden(true);
 
         mockMvc.perform(patch("/careers/{id}", savedCareer.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -75,5 +76,6 @@ class CareerControllerTest {
         Career updated = careerRepository.findById(savedCareer.getId()).orElseThrow();
         assertThat(updated.getTeam()).isEqualTo("updatedTeam");
         assertThat(updated.getPosition()).isEqualTo("updatedPosition");
+        assertThat(updated.isHidden()).isTrue();
     }
 }

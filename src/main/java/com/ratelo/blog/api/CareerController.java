@@ -25,8 +25,9 @@ public class CareerController {
     @GetMapping
     public List<CareerResponse> getAllCareers(
             @RequestParam(required = false) Boolean includeHidden,
-            @RequestParam(required = false) Long userId) {
-        return CareerResponse.from(careerService.getAllCareers(includeHidden, userId));
+            @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) String username) {
+        return CareerResponse.from(careerService.getAllCareers(includeHidden, userId, username));
     }
 
     @PostMapping

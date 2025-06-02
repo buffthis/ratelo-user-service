@@ -35,8 +35,8 @@ class CareerRepositoryImplTest {
     @Test
     @DisplayName("기본적으로 hidden=false인 데이터만 조회된다")
     void should_ReturnOnlyVisibleCareers_When_IncludeHiddenIsFalseOrNull() {
-        List<Career> result1 = careerRepository.findAllByCondition(false, null);
-        List<Career> result2 = careerRepository.findAllByCondition(null, null);
+        List<Career> result1 = careerRepository.findAllByCondition(false, null, null);
+        List<Career> result2 = careerRepository.findAllByCondition(null, null, null);
         assertThat(result1).hasSize(1);
         assertThat(result1.get(0).getTeam()).isEqualTo("visibleTeam");
         assertThat(result2).hasSize(1);
@@ -46,7 +46,7 @@ class CareerRepositoryImplTest {
     @Test
     @DisplayName("includeHidden=true이면 모든 데이터가 조회된다")
     void should_ReturnAllCareers_When_IncludeHiddenIsTrue() {
-        List<Career> result = careerRepository.findAllByCondition(true, null);
+        List<Career> result = careerRepository.findAllByCondition(true, null, null);
         assertThat(result).hasSize(2);
         assertThat(result).extracting(Career::getTeam).containsExactlyInAnyOrder("visibleTeam", "hiddenTeam");
     }

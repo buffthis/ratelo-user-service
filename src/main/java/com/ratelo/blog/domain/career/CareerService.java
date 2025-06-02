@@ -29,8 +29,8 @@ public class CareerService {
         return careerRepository.findById(id).orElse(null);
     }
 
-    public List<Career> getAllCareers(Boolean includeHidden, Long userId) {
-        return careerRepository.findAllByCondition(includeHidden, userId);
+    public List<Career> getAllCareers(Boolean includeHidden, Long userId, String username) {
+        return careerRepository.findAllByCondition(includeHidden, userId, username);
     }
 
     public Career createCareer(CareerCreateRequest request) {

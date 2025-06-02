@@ -16,6 +16,7 @@ public class SkillResponse {
     private ToolResponse tool;
     private byte level;
     private String description;
+    private Boolean hidden;
 
     public static SkillResponse from(Skill skill) {
         if (skill == null) return null;
@@ -24,6 +25,7 @@ public class SkillResponse {
                 .tool(ToolResponse.from(skill.getTool()))
                 .level(skill.getLevel())
                 .description(skill.getDescription())
+                .hidden(skill.isHidden())
                 .build();
     }
 

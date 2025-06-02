@@ -44,7 +44,7 @@ public class Post {
 
     @Column(nullable = false)
     @Builder.Default
-    private boolean isHidden = false;
+    private boolean hidden = false;
 
     public void update(PostUpdateRequest request, Image thumbnail) {
         this.title = request.getTitle();

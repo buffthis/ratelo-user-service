@@ -56,7 +56,7 @@ public class Project {
 
     @Column(nullable = false)
     @Builder.Default
-    private boolean isHidden = false;
+    private boolean hidden = false;
 
     public void update(ProjectUpdateRequest request, Image thumbnail) {
         this.title = request.getTitle();

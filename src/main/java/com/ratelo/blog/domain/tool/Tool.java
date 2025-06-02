@@ -24,7 +24,7 @@ public class Tool {
 
     @Column(nullable = false)
     @Builder.Default
-    private boolean isHidden = false;
+    private boolean hidden = false;
 
     public void update(ToolUpdateRequest request, Image logo) {
         this.name = request.getName();

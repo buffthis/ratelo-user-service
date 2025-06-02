@@ -24,7 +24,7 @@ public class Company {
 
     @Column(nullable = false)
     @Builder.Default
-    private boolean isHidden = false;
+    private boolean hidden = false;
 
     public void update(CompanyUpdateRequest request, Image logo) {
         this.name = request.getName();

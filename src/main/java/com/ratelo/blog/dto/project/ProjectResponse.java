@@ -26,6 +26,7 @@ public class ProjectResponse {
     private String periodNote;
     private List<UserResponse> participants;
     private String externalUrl;
+    private Boolean hidden;
 
     public static ProjectResponse from(Project project) {
         if (project == null) return null;
@@ -41,6 +42,7 @@ public class ProjectResponse {
                 .periodNote(project.getPeriodNote())
                 .participants(project.getParticipants() == null ? List.of() : project.getParticipants().stream().map(UserResponse::from).collect(Collectors.toList()))
                 .externalUrl(project.getExternalUrl())
+                .hidden(project.isHidden())
                 .build();
     }
 

@@ -32,11 +32,9 @@ public class SkillService {
         Tool tool = toolRepository.findById(request.getToolId())
                 .orElseThrow(() -> new EntityNotFoundException("Tool not found with id: " + request.getToolId()));
         skill.setTool(tool);
-
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
         skill.setUser(user);
-
         return skillRepository.save(skill);
     }
 
@@ -47,5 +45,19 @@ public class SkillService {
                 .orElseThrow(() -> new EntityNotFoundException("Tool not found with id: " + request.getToolId()));
         skill.update(request, tool);
         return skillRepository.save(skill);
+    }
+
+    public List<Skill> createSkills(List<SkillCreateRequest> requests) {
+        List<Skill> skills = requests.stream().map(request -> {
+            Skill skill = request.toEntity();
+            Tool tool = toolRepository.findById(request.getToolId())
+                .orElseThrow(() -> new EntityNotFoundException("Tool not found with id: " + request.getToolId()));
+            skill.setTool(tool);
+            User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
+            skill.setUser(user);
+            return skill;
+        }).toList();
+        return skillRepository.saveAll(skills);
     }
 } 

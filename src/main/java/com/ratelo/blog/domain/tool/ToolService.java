@@ -25,14 +25,15 @@ public class ToolService {
         return toolRepository.findAll();
     }
 
-    public Tool createTool(ToolCreateRequest request) {
-        Tool tool = request.toEntity();
-
-        Image logo = imageRepository.findById(request.getLogoId())
-            .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
-        tool.setLogo(logo);
-
-        return toolRepository.save(tool);
+    public List<Tool> createTools(List<ToolCreateRequest> requests) {
+        List<Tool> tools = requests.stream().map(request -> {
+            Tool tool = request.toEntity();
+            Image logo = imageRepository.findById(request.getLogoId())
+                .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
+            tool.setLogo(logo);
+            return tool;
+        }).toList();
+        return toolRepository.saveAll(tools);
     }
 
     public Tool updateTool(Long id, ToolUpdateRequest request) {
@@ -41,6 +42,14 @@ public class ToolService {
         Image logo = imageRepository.findById(request.getLogoId())
             .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
         tool.update(request, logo);
+        return toolRepository.save(tool);
+    }
+
+    public Tool createTool(ToolCreateRequest request) {
+        Tool tool = request.toEntity();
+        Image logo = imageRepository.findById(request.getLogoId())
+            .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
+        tool.setLogo(logo);
         return toolRepository.save(tool);
     }
 }

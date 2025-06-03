@@ -4,6 +4,7 @@ import com.ratelo.blog.domain.tool.ToolService;
 import com.ratelo.blog.dto.tool.ToolCreateRequest;
 import com.ratelo.blog.dto.tool.ToolResponse;
 import com.ratelo.blog.dto.tool.ToolUpdateRequest;
+import com.ratelo.blog.dto.tool.ToolBulkCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,11 @@ public class ToolController {
     @PostMapping
     public ToolResponse createTool(@RequestBody ToolCreateRequest request) {
         return ToolResponse.from(toolService.createTool(request));
+    }
+
+    @PostMapping("/bulk")
+    public List<ToolResponse> createTools(@RequestBody ToolBulkCreateRequest request) {
+        return ToolResponse.from(toolService.createTools(request.getTools()));
     }
 
     @PutMapping("/{id}")

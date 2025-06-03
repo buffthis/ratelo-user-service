@@ -4,6 +4,7 @@ import com.ratelo.blog.domain.skill.SkillService;
 import com.ratelo.blog.dto.skill.SkillCreateRequest;
 import com.ratelo.blog.dto.skill.SkillResponse;
 import com.ratelo.blog.dto.skill.SkillUpdateRequest;
+import com.ratelo.blog.dto.skill.SkillBulkCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,11 @@ public class SkillController {
     @PostMapping
     public SkillResponse createSkill(@RequestBody SkillCreateRequest request) {
         return SkillResponse.from(skillService.createSkill(request));
+    }
+
+    @PostMapping("/bulk")
+    public List<SkillResponse> createSkills(@RequestBody SkillBulkCreateRequest request) {
+        return SkillResponse.from(skillService.createSkills(request.getSkills()));
     }
 
     @PutMapping("/{id}")

@@ -5,6 +5,7 @@ import com.ratelo.blog.dto.career.CareerCreateRequest;
 import com.ratelo.blog.dto.career.CareerPatchRequest;
 import com.ratelo.blog.dto.career.CareerResponse;
 import com.ratelo.blog.dto.career.CareerUpdateRequest;
+import com.ratelo.blog.dto.career.CareerBulkCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,11 @@ public class CareerController {
     @PostMapping
     public CareerResponse createCareer(@RequestBody CareerCreateRequest request) {
         return CareerResponse.from(careerService.createCareer(request));
+    }
+
+    @PostMapping("/bulk")
+    public List<CareerResponse> createCareers(@RequestBody CareerBulkCreateRequest request) {
+        return CareerResponse.from(careerService.createCareers(request.getCareers()));
     }
 
     @PutMapping("/{id}")

@@ -4,6 +4,7 @@ import com.ratelo.blog.domain.company.CompanyService;
 import com.ratelo.blog.dto.company.CompanyCreateRequest;
 import com.ratelo.blog.dto.company.CompanyResponse;
 import com.ratelo.blog.dto.company.CompanyUpdateRequest;
+import com.ratelo.blog.dto.company.CompanyBulkCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,11 @@ public class CompanyController {
     @PostMapping
     public CompanyResponse createCompany(@RequestBody CompanyCreateRequest request) {
         return CompanyResponse.from(companyService.createCompany(request));
+    }
+
+    @PostMapping("/bulk")
+    public List<CompanyResponse> createCompanies(@RequestBody CompanyBulkCreateRequest request) {
+        return CompanyResponse.from(companyService.createCompanies(request.getCompanies()));
     }
 
     @PutMapping("/{id}")

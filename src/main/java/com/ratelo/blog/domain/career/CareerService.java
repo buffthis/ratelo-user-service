@@ -33,18 +33,18 @@ public class CareerService {
         return careerRepository.findAllByCondition(includeHidden, userId, username);
     }
 
-    public Career createCareer(CareerCreateRequest request) {
-        Career career = request.toEntity();
-
-        Company company = companyRepository.findById(request.getCompanyId())
+    public List<Career> createCareers(List<CareerCreateRequest> requests) {
+        List<Career> careers = requests.stream().map(request -> {
+            Career career = request.toEntity();
+            Company company = companyRepository.findById(request.getCompanyId())
                 .orElseThrow(() -> new EntityNotFoundException("Company not found with id: " + request.getCompanyId()));
-        career.setCompany(company);
-
-        User user = userRepository.findById(request.getUserId())
+            career.setCompany(company);
+            User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
-        career.setUser(user);
-
-        return careerRepository.save(career);
+            career.setUser(user);
+            return career;
+        }).toList();
+        return careerRepository.saveAll(careers);
     }
 
     public Career updateCareer(Long id, CareerUpdateRequest request) {
@@ -74,6 +74,17 @@ public class CareerService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
             career.setUser(user);
         }
+        return careerRepository.save(career);
+    }
+
+    public Career createCareer(CareerCreateRequest request) {
+        Career career = request.toEntity();
+        Company company = companyRepository.findById(request.getCompanyId())
+                .orElseThrow(() -> new EntityNotFoundException("Company not found with id: " + request.getCompanyId()));
+        career.setCompany(company);
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
+        career.setUser(user);
         return careerRepository.save(career);
     }
 }

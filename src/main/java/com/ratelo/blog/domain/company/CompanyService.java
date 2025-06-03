@@ -43,4 +43,15 @@ public class CompanyService {
         company.update(request, logo);
         return companyRepository.save(company);
     }
+
+    public List<Company> createCompanies(List<CompanyCreateRequest> requests) {
+        List<Company> companies = requests.stream().map(request -> {
+            Company company = request.toEntity();
+            Image logo = imageRepository.findById(request.getLogoId())
+                .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
+            company.setLogo(logo);
+            return company;
+        }).toList();
+        return companyRepository.saveAll(companies);
+    }
 }

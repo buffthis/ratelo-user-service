@@ -32,4 +32,11 @@ public class ImageService {
         image.update(request);
         return imageRepository.save(image);
     }
+
+    public List<Image> createImages(List<ImageCreateRequest> requests) {
+        List<Image> images = requests.stream()
+                .map(ImageCreateRequest::toEntity)
+                .toList();
+        return imageRepository.saveAll(images);
+    }
 }

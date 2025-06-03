@@ -4,6 +4,7 @@ import com.ratelo.blog.domain.image.ImageService;
 import com.ratelo.blog.dto.image.ImageCreateRequest;
 import com.ratelo.blog.dto.image.ImageResponse;
 import com.ratelo.blog.dto.image.ImageUpdateRequest;
+import com.ratelo.blog.dto.image.ImageBulkCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,11 @@ public class ImageController {
     @PostMapping
     public ImageResponse createImage(@RequestBody ImageCreateRequest request) {
         return ImageResponse.from(imageService.createImage(request));
+    }
+
+    @PostMapping("/bulk")
+    public List<ImageResponse> createImages(@RequestBody ImageBulkCreateRequest request) {
+        return ImageResponse.from(imageService.createImages(request.getImages()));
     }
 
     @PutMapping("/{id}")

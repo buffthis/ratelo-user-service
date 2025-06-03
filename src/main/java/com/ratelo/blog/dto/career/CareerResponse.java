@@ -28,7 +28,15 @@ public class CareerResponse {
     public static CareerResponse from(Career career) {
         return CareerResponse.builder()
                 .id(career.getId())
-                .company(CompanyResponse.from(career.getCompany()))
+                .company(
+                    career.isMasked()
+                    ? CompanyResponse.builder()
+                        .id(null)
+                        .name("***********")
+                        .logo(null)
+                        .build()
+                    : CompanyResponse.from(career.getCompany());
+                )
                 .team(career.getTeam())
                 .position(career.getPosition())
                 .startDate(career.getStartDate())

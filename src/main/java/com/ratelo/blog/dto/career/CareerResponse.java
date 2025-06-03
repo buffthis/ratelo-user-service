@@ -35,7 +35,7 @@ public class CareerResponse {
                         .name("***********")
                         .logo(null)
                         .build()
-                    : CompanyResponse.from(career.getCompany());
+                    : CompanyResponse.from(career.getCompany())
                 )
                 .team(career.getTeam())
                 .position(career.getPosition())

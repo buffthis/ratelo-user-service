@@ -28,6 +28,7 @@ public class UserResponse {
     private List<SkillResponse> skills;
     private List<ProjectSummaryResponse> projectSummaries;
     private List<PostSummaryResponse> postSummaries;
+    private UserType userType;
 
     public static UserResponse from(User user) {
         return UserResponse.builder()
@@ -61,8 +62,8 @@ public class UserResponse {
                         .filter(post -> !post.isHidden())
                         .map(PostSummaryResponse::from)
                         .collect(Collectors.toList()))
+                .userType(user.getUserType())
                 .build();
-
     }
 
     public static List<UserResponse> from(List<User> users) {

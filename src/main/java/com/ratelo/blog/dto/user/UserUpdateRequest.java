@@ -20,4 +20,5 @@ public class UserUpdateRequest {
     private Long profileImageId;
     private List<Long> careerIds = new ArrayList<>();
     private List<Long> skillIds = new ArrayList<>();
+    private UserType userType = UserType.MEMBER;
 } 

@@ -59,6 +59,14 @@ public class User {
     @Builder.Default
     private Set<Project> projects = new HashSet<>();
 
+    private boolean disabled = false;
+    private boolean masked = false;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private UserType userType = UserType.MEMBER;
+
     public void update(UserUpdateRequest request, Image profileImage, List<Career> careers, List<Skill> skills) {
         this.username = request.getUsername();
         this.name = request.getName();
@@ -66,6 +74,7 @@ public class User {
         this.setProfileImage(profileImage);
         this.setCareers(careers);
         this.setSkills(skills);
+        this.userType = request.getUserType();
     }
 
     public void addCareer(Career career) {

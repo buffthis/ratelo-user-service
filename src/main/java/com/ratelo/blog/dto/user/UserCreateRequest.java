@@ -16,12 +16,14 @@ public class UserCreateRequest {
     private String name;
     private String bio;
     private Long profileImageId;
+    private UserType userType = UserType.MEMBER;
 
     public User toEntity() {
         return User.builder()
                 .username(username)
                 .name(name)
                 .bio(bio)
+                .userType(userType)
                 .build();
     }
 }

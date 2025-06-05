@@ -16,6 +16,8 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = true, unique = true)
+    private String username;
     private String name;
 
     @OneToOne

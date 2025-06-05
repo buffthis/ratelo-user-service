@@ -40,6 +40,9 @@ public class UserService {
 
     public User createUser(UserCreateRequest request) {
         User user = request.toEntity();
+        if (user.getUserType() == null) {
+            user.setUserType(UserType.MEMBER);
+        }
         Image profileImage = null;
         if (request.getProfileImageId() != null) {
             profileImage = imageRepository.findById(request.getProfileImageId())
@@ -60,6 +63,9 @@ public class UserService {
         List<Career> careers = careerRepository.findAllById(request.getCareerIds());
         List<Skill> skills = skillRepository.findAllById(request.getSkillIds());
         user.update(request, profileImage, careers, skills);
+        if (user.getUserType() == null) {
+            user.setUserType(UserType.MEMBER);
+        }
         return userRepository.save(user);
     }
 

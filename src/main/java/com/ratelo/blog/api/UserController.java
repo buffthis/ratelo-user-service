@@ -61,4 +61,9 @@ public class UserController {
             @RequestBody UserSkillsUpdateRequest request) {
         return UserResponse.from(userService.updateSkills(id, request));
     }
+
+    @PatchMapping("/{id}")
+    public UserResponse patchUser(@PathVariable Long id, @RequestBody UserPatchRequest request) {
+        return UserResponse.from(userService.patchUser(id, request));
+    }
 }

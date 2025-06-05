@@ -21,6 +21,7 @@ public class UserService {
     private final CareerRepository careerRepository;
     private final ImageRepository imageRepository;
     private final SkillRepository skillRepository;
+    private final UserPatchMapper userPatchMapper;
 
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
@@ -92,6 +93,31 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
         List<Skill> skills = skillRepository.findAllById(request.getSkillIds());
         user.setSkills(skills);
+        return userRepository.save(user);
+    }
+
+    public User patchUser(Long id, UserPatchRequest request) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+
+        userPatchMapper.updateUserFromDto(request, user);
+
+        if (request.getProfileImageId() != null) {
+            Image profileImage = imageRepository.findById(request.getProfileImageId())
+                    .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
+            user.setProfileImage(profileImage);
+        }
+        if (request.getCareerIds() != null) {
+            List<Career> careers = careerRepository.findAllById(request.getCareerIds());
+            user.setCareers(careers);
+        }
+        if (request.getSkillIds() != null) {
+            List<Skill> skills = skillRepository.findAllById(request.getSkillIds());
+            user.setSkills(skills);
+        }
+        if (user.getUserType() == null) {
+            user.setUserType(UserType.MEMBER);
+        }
         return userRepository.save(user);
     }
 }

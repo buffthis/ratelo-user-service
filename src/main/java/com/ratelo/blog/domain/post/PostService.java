@@ -5,6 +5,7 @@ import com.ratelo.blog.domain.image.ImageRepository;
 import com.ratelo.blog.domain.user.User;
 import com.ratelo.blog.domain.user.UserRepository;
 import com.ratelo.blog.dto.post.PostCreateRequest;
+import com.ratelo.blog.dto.post.PostPatchRequest;
 import com.ratelo.blog.dto.post.PostUpdateRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;
+    private final PostPatchMapper postPatchMapper;
 
     public Post getPostById(Long id) {
         return postRepository.findById(id).orElse(null);
@@ -31,10 +33,10 @@ public class PostService {
         Image thumbnail = null;
         if (request.getThumbnailId() != null) {
             thumbnail = imageRepository.findById(request.getThumbnailId())
-                .orElseThrow(() -> new EntityNotFoundException("Thumbnail image not found with id: " + request.getThumbnailId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Thumbnail image not found with id: " + request.getThumbnailId()));
         }
         User user = userRepository.findById(request.getUserId())
-            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
         Post post = request.toEntity();
         post.setThumbnail(thumbnail);
         post.setUser(user);
@@ -47,9 +49,28 @@ public class PostService {
         Image thumbnail = null;
         if (request.getThumbnailId() != null) {
             thumbnail = imageRepository.findById(request.getThumbnailId())
-                .orElseThrow(() -> new EntityNotFoundException("Thumbnail image not found with id: " + request.getThumbnailId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Thumbnail image not found with id: " + request.getThumbnailId()));
         }
         post.update(request, thumbnail);
         return postRepository.save(post);
     }
-} 
+
+    public Post patchPost(Long id, PostPatchRequest request) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + id));
+
+        postPatchMapper.updatePostFromDto(request, post);
+
+        if (request.getThumbnailId() != null) {
+            Image thumbnail = imageRepository.findById(request.getThumbnailId())
+                    .orElseThrow(() -> new EntityNotFoundException("Thumbnail image not found with id: " + request.getThumbnailId()));
+            post.setThumbnail(thumbnail);
+        }
+        if (request.getUserId() != null) {
+            User user = userRepository.findById(request.getUserId())
+                    .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + request.getUserId()));
+            post.setUser(user);
+        }
+        return postRepository.save(post);
+    }
+}

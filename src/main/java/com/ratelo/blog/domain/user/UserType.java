@@ -5,5 +5,5 @@ public enum UserType {
     MANAGER,
     MEMBER,
     GUEST,
-    MOCK
+    TEST
 } 

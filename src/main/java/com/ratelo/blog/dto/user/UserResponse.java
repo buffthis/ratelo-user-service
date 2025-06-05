@@ -1,6 +1,7 @@
 package com.ratelo.blog.dto.user;
 
 import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.domain.user.UserType;
 import com.ratelo.blog.dto.career.CareerResponse;
 import com.ratelo.blog.dto.image.ImageResponse;
 import com.ratelo.blog.dto.post.PostSummaryResponse;

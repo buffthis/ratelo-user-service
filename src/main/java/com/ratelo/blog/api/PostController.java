@@ -4,6 +4,7 @@ import com.ratelo.blog.domain.post.PostService;
 import com.ratelo.blog.dto.post.PostCreateRequest;
 import com.ratelo.blog.dto.post.PostResponse;
 import com.ratelo.blog.dto.post.PostUpdateRequest;
+import com.ratelo.blog.dto.post.PostPatchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,5 +36,10 @@ public class PostController {
             @PathVariable Long id,
             @RequestBody PostUpdateRequest request) {
         return PostResponse.from(postService.updatePost(id, request));
+    }
+
+    @PatchMapping("/{id}")
+    public PostResponse patchPost(@PathVariable Long id, @RequestBody PostPatchRequest request) {
+        return PostResponse.from(postService.patchPost(id, request));
     }
 } 

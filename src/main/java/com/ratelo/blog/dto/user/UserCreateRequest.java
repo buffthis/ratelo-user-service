@@ -1,6 +1,7 @@
 package com.ratelo.blog.dto.user;
 
 import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.domain.user.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

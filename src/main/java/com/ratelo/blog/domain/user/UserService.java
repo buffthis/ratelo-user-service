@@ -112,7 +112,7 @@ public class UserService {
             user.setSkills(skills);
         }
         if (user.getUserType() == null) {
-            user.setUserType(UserType.MEMBER);
+            user.setUserType(UserType.TEST);
         }
         return userRepository.save(user);
     }

@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -125,5 +126,10 @@ public class UserService {
     public Slice<UserResponse> getUsersByCursor(Long lastId, int pageSize, String nameFilter, UserType userTypeFilter) {
         return userRepository.findAllByCursor(lastId, pageSize, nameFilter, userTypeFilter)
                 .map(UserResponse::from);
+    }
+
+    @Transactional
+    public List<User> createUsers(List<UserCreateRequest> requests) {
+        return requests.stream().map(request -> createUser(request)).toList();
     }
 }

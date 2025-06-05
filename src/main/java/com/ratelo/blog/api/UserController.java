@@ -78,4 +78,9 @@ public class UserController {
     ) {
         return userService.getUsersByCursor(lastId, pageSize, name, userType);
     }
+
+    @PostMapping("/bulk")
+    public List<UserResponse> createUsers(@RequestBody UserBulkCreateRequest request) {
+        return UserResponse.from(userService.createUsers(request.getUsers()));
+    }
 }

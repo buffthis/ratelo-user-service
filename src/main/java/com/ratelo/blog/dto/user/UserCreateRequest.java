@@ -18,7 +18,7 @@ public class UserCreateRequest {
     private String name;
     private String bio;
     private ImageCreateRequest imageCreateRequest;
-    private UserType userType = UserType.MEMBER;
+    private UserType userType = UserType.TEST;
 
     public User toEntity() {
         return User.builder()

@@ -43,9 +43,6 @@ public class UserService {
 
     public User createUser(UserCreateRequest request) {
         User user = request.toEntity();
-        if (user.getUserType() == null) {
-            user.setUserType(UserType.TEST);
-        }
         if (request.getImageCreateRequest() != null) {
             user.setProfileImage(imageRepository.save(request.getImageCreateRequest().toEntity()));
         }

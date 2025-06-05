@@ -2,6 +2,7 @@ package com.ratelo.blog.dto.user;
 
 import com.ratelo.blog.domain.user.User;
 import com.ratelo.blog.domain.user.UserType;
+import com.ratelo.blog.dto.image.ImageCreateRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class UserCreateRequest {
     @NotNull
     private String name;
     private String bio;
-    private Long profileImageId;
+    private ImageCreateRequest imageCreateRequest;
     private UserType userType = UserType.MEMBER;
 
     public User toEntity() {

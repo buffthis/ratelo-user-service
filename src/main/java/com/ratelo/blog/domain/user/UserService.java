@@ -43,13 +43,10 @@ public class UserService {
     public User createUser(UserCreateRequest request) {
         User user = request.toEntity();
         if (user.getUserType() == null) {
-            user.setUserType(UserType.MEMBER);
+            user.setUserType(UserType.TEST);
         }
-        Image profileImage = null;
-        if (request.getProfileImageId() != null) {
-            profileImage = imageRepository.findById(request.getProfileImageId())
-                    .orElseThrow(() -> new EntityNotFoundException("Profile image not found with id: " + request.getProfileImageId()));
-            user.setProfileImage(profileImage);
+        if (request.getImageCreateRequest() != null) {
+            user.setProfileImage(imageRepository.save(request.getImageCreateRequest().toEntity()));
         }
         return userRepository.save(user);
     }

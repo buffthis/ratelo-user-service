@@ -1,8 +1,10 @@
 package com.ratelo.blog.api;
 
 import com.ratelo.blog.domain.user.UserService;
+import com.ratelo.blog.domain.user.UserType;
 import com.ratelo.blog.dto.user.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,5 +67,15 @@ public class UserController {
     @PatchMapping("/{id}")
     public UserResponse patchUser(@PathVariable Long id, @RequestBody UserPatchRequest request) {
         return UserResponse.from(userService.patchUser(id, request));
+    }
+
+    @GetMapping("/cursor")
+    public Slice<UserResponse> getUsersByCursor(
+            @RequestParam(required = false) Long lastId,
+            @RequestParam(defaultValue = "20") int pageSize,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) UserType userType
+    ) {
+        return userService.getUsersByCursor(lastId, pageSize, name, userType);
     }
 }

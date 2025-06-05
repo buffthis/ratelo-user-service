@@ -9,6 +9,7 @@ import com.ratelo.blog.domain.skill.SkillRepository;
 import com.ratelo.blog.dto.user.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -119,5 +120,13 @@ public class UserService {
             user.setUserType(UserType.MEMBER);
         }
         return userRepository.save(user);
+    }
+
+    /**
+     * cursor based pagination with filter
+     */
+    public Slice<UserResponse> getUsersByCursor(Long lastId, int pageSize, String nameFilter, UserType userTypeFilter) {
+        return userRepository.findAllByCursor(lastId, pageSize, nameFilter, userTypeFilter)
+                .map(UserResponse::from);
     }
 }

@@ -1,18 +1,15 @@
 package com.ratelo.blog.domain.career;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.querydsl.core.BooleanBuilder;
-import jakarta.persistence.EntityManager;
-import org.springframework.stereotype.Repository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
-@Repository
+
+@RequiredArgsConstructor
 public class CareerRepositoryImpl implements CareerRepositoryCustom {
     private final JPAQueryFactory queryFactory;
-
-    public CareerRepositoryImpl(EntityManager em) {
-        this.queryFactory = new JPAQueryFactory(em);
-    }
 
     @Override
     public List<Career> findAllByCondition(Boolean includeHidden, Long userId, String username) {

@@ -5,6 +5,7 @@ import com.ratelo.blog.dto.company.CompanyCreateRequest;
 import com.ratelo.blog.dto.company.CompanyResponse;
 import com.ratelo.blog.dto.company.CompanyUpdateRequest;
 import com.ratelo.blog.dto.company.CompanyBulkCreateRequest;
+import com.ratelo.blog.dto.company.CompanyPatchRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +43,12 @@ public class CompanyController {
             @PathVariable Long id,
             @RequestBody CompanyUpdateRequest request) {
         return CompanyResponse.from(companyService.updateCompany(id, request));
+    }
+
+    @PatchMapping("/{id}")
+    public CompanyResponse patchCompany(
+            @PathVariable Long id,
+            @RequestBody CompanyPatchRequest request) {
+        return CompanyResponse.from(companyService.patchCompany(id, request));
     }
 }

@@ -13,6 +13,7 @@ public class CompanyCreateRequest {
     @NotNull
     private String name;
     private Long logoId;
+    private Long wideLogoId;
 
     public Company toEntity() {
         return Company.builder()

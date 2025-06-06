@@ -12,4 +12,5 @@ public class CompanyUpdateRequest {
     @NotNull
     private String name;
     private Long logoId;
+    private Long wideLogoId;
 } 

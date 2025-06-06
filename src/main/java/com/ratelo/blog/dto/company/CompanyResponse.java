@@ -16,6 +16,7 @@ public class CompanyResponse {
     private Long id;
     private String name;
     private ImageResponse logo;
+    private ImageResponse wideLogo;
 
     public static CompanyResponse from(Company company) {
         if (company == null) return null;
@@ -23,6 +24,7 @@ public class CompanyResponse {
                 .id(company.getId())
                 .name(company.getName())
                 .logo(ImageResponse.from(company.getLogo()))
+                .wideLogo(ImageResponse.from(company.getWideLogo()))
                 .build();
     }
 

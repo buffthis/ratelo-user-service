@@ -4,18 +4,20 @@ import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
 import com.ratelo.blog.dto.company.CompanyCreateRequest;
 import com.ratelo.blog.dto.company.CompanyUpdateRequest;
+import com.ratelo.blog.dto.company.CompanyPatchRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
     private final ImageRepository imageRepository;
+    private final CompanyPatchMapper companyPatchMapper;
 
     public Company getCompanyById(Long id) {
         return companyRepository.findById(id).orElse(null);
@@ -32,6 +34,12 @@ public class CompanyService {
             .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
         company.setLogo(logo);
 
+        if (request.getWideLogoId() != null) {
+            Image wideLogo = imageRepository.findById(request.getWideLogoId())
+                    .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
+            company.setWideLogo(wideLogo);
+        }
+
         return companyRepository.save(company);
     }
 
@@ -40,7 +48,12 @@ public class CompanyService {
             .orElseThrow(() -> new EntityNotFoundException("Company not found with id: " + id));
         Image logo = imageRepository.findById(request.getLogoId())
             .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
-        company.update(request, logo);
+        Image wideLogo = null;
+        if (request.getWideLogoId() != null) {
+            wideLogo = imageRepository.findById(request.getLogoId())
+                    .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
+        }
+        company.update(request, logo, wideLogo);
         return companyRepository.save(company);
     }
 
@@ -50,8 +63,32 @@ public class CompanyService {
             Image logo = imageRepository.findById(request.getLogoId())
                 .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
             company.setLogo(logo);
+            if (request.getWideLogoId() != null) {
+                Image wideLogo = imageRepository.findById(request.getWideLogoId())
+                        .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
+                company.setWideLogo(wideLogo);
+            }
             return company;
         }).toList();
         return companyRepository.saveAll(companies);
+    }
+
+    public Company patchCompany(Long id, CompanyPatchRequest request) {
+        Company company = companyRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Company not found with id: " + id));
+
+        companyPatchMapper.updateCompanyFromDto(request, company);
+
+        if (request.getLogoId() != null) {
+            Image logo = imageRepository.findById(request.getLogoId())
+                .orElseThrow(() -> new EntityNotFoundException("Logo image not found with id: " + request.getLogoId()));
+            company.setLogo(logo);
+        }
+        if (request.getWideLogoId() != null) {
+            Image wideLogo = imageRepository.findById(request.getWideLogoId())
+                .orElseThrow(() -> new EntityNotFoundException("Wide logo image not found with id: " + request.getWideLogoId()));
+            company.setWideLogo(wideLogo);
+        }
+        return companyRepository.save(company);
     }
 }

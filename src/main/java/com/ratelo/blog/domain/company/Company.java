@@ -22,10 +22,15 @@ public class Company {
 
     @OneToOne
     @JoinColumn(name = "logo_id")
-    private Image logo;
+    private Image logo;  // square logo
 
-    public void update(CompanyUpdateRequest request, Image logo) {
+    @OneToOne
+    @JoinColumn(name = "wide_logo_id")
+    private Image wideLogo;
+
+    public void update(CompanyUpdateRequest request, Image logo, Image wideLogo) {
         this.name = request.getName();
         this.setLogo(logo);
+        this.setWideLogo(wideLogo);
     }
 }

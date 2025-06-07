@@ -34,6 +34,7 @@ public class CareerResponse {
                         .id(null)
                         .name("***********")
                         .logo(null)
+                        .wideLogo(null)
                         .build()
                     : CompanyResponse.from(career.getCompany())
                 )

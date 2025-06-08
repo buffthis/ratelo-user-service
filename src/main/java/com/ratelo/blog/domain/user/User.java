@@ -26,7 +26,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @BannedUsername(value = {"user", "admin", "root", "system"})
+    @BannedUsername(value = {"user", "admin", "root", "system", "unblind"})
     private String username;
 
     private String name;

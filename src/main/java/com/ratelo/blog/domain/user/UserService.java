@@ -155,25 +155,31 @@ public class UserService {
                 company = careers.get(0).getCompany();
             }
         }
-        String companyLogoUrl = (company != null && company.getLogo() != null) ? company.getLogo().getUrl() : null;
-
+        String companyLogoUrl = null;
+        if (company != null) {
+            if (company.getWideLogo() != null) {
+                companyLogoUrl = company.getWideLogo().getUrl();
+            } else if (company.getLogo() != null) {
+                companyLogoUrl = company.getLogo().getUrl();
+            }
+        }
         StringBuilder svg = new StringBuilder();
-        svg.append("<svg width=\"160\" height=\"204\" viewBox=\"0 0 160 204\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">");
+        svg.append("<svg width=\"160\" height=\"204\" viewBox=\"0 0 160 204\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">");
+        svg.append(String.format("<a xlink:href=\"https://unblind.kr/users/%s\" target=\"_blank\">", escapeXml(user.getUsername())));
         svg.append("<defs><clipPath id=\"profileClip\"><circle cx=\"80\" cy=\"48\" r=\"28\"/></clipPath></defs>");
         svg.append("<rect x=\"0\" y=\"0\" width=\"160\" height=\"204\" rx=\"16\" fill=\"#fff\" stroke=\"#e0e0e0\" stroke-width=\"1.5\"/>");
         svg.append("<circle cx=\"80\" cy=\"48\" r=\"28\" fill=\"#f3f4f6\" stroke=\"#e0e0e0\" stroke-width=\"1.5\"/>");
         if (profileImageUrl != null) {
             svg.append(String.format("<image href=\"%s\" x=\"52\" y=\"20\" width=\"56\" height=\"56\" clip-path=\"url(#profileClip)\" />", profileImageUrl));
         }
-        svg.append(String.format("<text x=\"80\" y=\"90\" font-size=\"14\" font-weight=\"600\" fill=\"#222\" text-anchor=\"middle\" alignment-baseline=\"middle\" font-family=\"Pretendard, Noto Sans KR, Arial, sans-serif\">%s</text>", escapeXml(username)));
+        svg.append(String.format("<text x=\"80\" y=\"90\" font-size=\"14\" font-weight=\"600\" fill=\"#222\" text-anchor=\"middle\" alignment-baseline=\"middle\" font-family=\"Pretendard, Noto Sans KR, Arial, sans-serif\">%s</text>", escapeXml(user.getUsername())));
         svg.append(String.format("<text x=\"80\" y=\"110\" font-size=\"12\" font-weight=\"300\" fill=\"#222\" text-anchor=\"middle\" alignment-baseline=\"middle\" font-family=\"Pretendard, Noto Sans KR, Arial, sans-serif\">%s</text>", escapeXml(name)));
         svg.append(String.format("<text x=\"80\" y=\"128\" font-size=\"10\" font-weight=\"300\" fill=\"#888\" text-anchor=\"middle\" alignment-baseline=\"middle\" font-family=\"Pretendard, Noto Sans KR, Arial, sans-serif\">%s</text>", escapeXml(bio)));
         svg.append("<rect x=\"20\" y=\"146\" width=\"120\" height=\"1.5\" fill=\"#e0e0e0\" rx=\"0.75\"/>");
-
         if (companyLogoUrl != null) {
-            svg.append(String.format("<image href=\"%s\" x=\"30\" y=\"155\" width=\"100\" height=\"36\" />", companyLogoUrl));
+            svg.append(String.format("<image href=\"%s\" x=\"30\" y=\"156\" width=\"100\" height=\"32\" />", companyLogoUrl));
         }
-
+        svg.append("</a>");
         svg.append("</svg>");
         return svg.toString();
     }

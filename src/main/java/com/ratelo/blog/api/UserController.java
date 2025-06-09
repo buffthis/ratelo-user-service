@@ -83,4 +83,9 @@ public class UserController {
     public List<UserResponse> createUsers(@RequestBody UserBulkCreateRequest request) {
         return UserResponse.from(userService.createUsers(request.getUsers()));
     }
+
+    @GetMapping(value = "/{id}/svg-card", produces = "image/svg+xml")
+    public String getUserSvgCard(@PathVariable Long id) {
+        return userService.getUserSvgCard(id);
+    }
 }

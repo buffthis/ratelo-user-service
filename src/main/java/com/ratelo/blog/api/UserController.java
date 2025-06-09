@@ -84,8 +84,8 @@ public class UserController {
         return UserResponse.from(userService.createUsers(request.getUsers()));
     }
 
-    @GetMapping(value = "/{id}/svg-card", produces = "image/svg+xml")
-    public String getUserSvgCard(@PathVariable Long id) {
-        return userService.getUserSvgCard(id);
+    @GetMapping(value = "/{username}/svg-card", produces = "image/svg+xml")
+    public String getUserSvgCard(@PathVariable String username) {
+        return userService.getUserSvgCard(username);
     }
 }

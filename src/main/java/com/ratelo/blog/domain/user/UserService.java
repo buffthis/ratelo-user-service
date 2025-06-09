@@ -130,12 +130,12 @@ public class UserService {
         return requests.stream().map(request -> createUser(request)).toList();
     }
 
-    public String getUserSvgCard(Long id) {
-        User user = getUserById(id);
-        if (user == null) throw new EntityNotFoundException("User not found with id: " + id);
+    public String getUserSvgCard(String username) {
+        User user = getUserByUsername(username);
+        Long id = user.getId();
+        if (user == null) throw new EntityNotFoundException("User not found with username: " + username);
 
         String profileImageUrl = user.getProfileImage() != null ? user.getProfileImage().getUrl() : null;
-        String username = user.getUsername() != null ? user.getUsername() : "";
         String name = user.getName() != null ? user.getName() : "";
         String bio = user.getBio() != null ? user.getBio() : "";
 

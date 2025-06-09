@@ -4,10 +4,9 @@ import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.career.CareerRepository;
 import com.ratelo.blog.domain.company.Company;
 import com.ratelo.blog.domain.image.Image;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,8 +16,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 class UserServiceTest {
     @Mock
@@ -63,11 +62,11 @@ class UserServiceTest {
         career.setStartDate(LocalDate.of(2022, 1, 1));
         career.setHidden(false);
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findUserByUsername("tester")).thenReturn(Optional.of(user));
         when(careerRepository.findAllByUserId(1L)).thenReturn(List.of(career));
 
         // when
-        String svg = userService.getUserSvgCard(1L);
+        String svg = userService.getUserSvgCard("tester");
 
         // then
         assertTrue(svg.contains("tester"));
@@ -80,13 +79,6 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("user not found")
-    void testGetUserSvgCard_userNotFound() {
-        when(userRepository.findById(2L)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, () -> userService.getUserSvgCard(2L));
-    }
-
-    @Test
     @DisplayName("no career or logo")
     void testGetUserSvgCard_noCareerOrLogo() {
         User user = new User();
@@ -95,10 +87,10 @@ class UserServiceTest {
         user.setName("no-career");
         user.setBio("");
         user.setProfileImage(null);
-        when(userRepository.findById(3L)).thenReturn(Optional.of(user));
+        when(userRepository.findUserByUsername("no-career")).thenReturn(Optional.of(user));
         when(careerRepository.findAllByUserId(3L)).thenReturn(List.of());
 
-        String svg = userService.getUserSvgCard(3L);
+        String svg = userService.getUserSvgCard("no-career");
         assertTrue(svg.contains("no-career"));
         assertTrue(svg.contains("no-career"));
         assertTrue(svg.startsWith("<svg"));
@@ -133,7 +125,7 @@ class UserServiceTest {
         when(careerRepository.findAllByUserId(10L)).thenReturn(List.of(career));
 
         // when
-        String svg = userService.getUserSvgCard(10L);
+        String svg = userService.getUserSvgCard("parrot");
 
         // then: save svg file
         java.nio.file.Path outputPath = java.nio.file.Path.of("build/test-output/user_svg_sample.svg");

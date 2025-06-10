@@ -1,10 +1,13 @@
 package com.ratelo.blog.api;
 
+import com.ratelo.blog.util.SvgToPngUtil;
 import com.ratelo.blog.domain.user.UserService;
 import com.ratelo.blog.domain.user.UserType;
 import com.ratelo.blog.dto.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -87,5 +90,12 @@ public class UserController {
     @GetMapping(value = "/{username}/svg-card", produces = "image/svg+xml")
     public String getUserSvgCard(@PathVariable String username) {
         return userService.getUserSvgCard(username);
+    }
+
+    @GetMapping(value = "/{username}/card.png", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getUserPngCard(@PathVariable String username) throws Exception {
+        String svg = userService.getUserSvgCard(username);
+        byte[] png = SvgToPngUtil.svgToPng(svg);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(png);
     }
 }

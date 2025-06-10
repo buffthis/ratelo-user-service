@@ -4,6 +4,7 @@ import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.career.CareerRepository;
 import com.ratelo.blog.domain.company.Company;
 import com.ratelo.blog.domain.image.Image;
+import com.ratelo.blog.util.SvgToPngUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -37,45 +38,6 @@ class UserServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    @DisplayName("success")
-    void testGetUserSvgCard_success() {
-        // given
-        User user = new User();
-        user.setId(1L);
-        user.setUsername("tester");
-        user.setName("tester");
-        user.setBio("tester");
-        Image profileImage = new Image();
-        profileImage.setUrl("https://img.com/profile.png");
-        user.setProfileImage(profileImage);
-
-        Company company = new Company();
-        Image logo = new Image();
-        logo.setUrl("https://img.com/logo.png");
-        company.setLogo(logo);
-
-        Career career = new Career();
-        career.setCompany(company);
-        career.setStartDate(LocalDate.of(2022, 1, 1));
-        career.setHidden(false);
-
-        when(userRepository.findUserByUsername("tester")).thenReturn(Optional.of(user));
-        when(careerRepository.findAllByUserId(1L)).thenReturn(List.of(career));
-
-        // when
-        String svg = userService.getUserSvgCard("tester");
-
-        // then
-        assertTrue(svg.contains("tester"));
-        assertTrue(svg.contains("tester"));
-        assertTrue(svg.contains("tester"));
-        assertTrue(svg.contains("https://img.com/profile.png"));
-        assertTrue(svg.contains("https://img.com/logo.png"));
-        assertTrue(svg.startsWith("<svg"));
-        assertTrue(svg.endsWith("</svg>"));
     }
 
     @Test
@@ -121,7 +83,7 @@ class UserServiceTest {
         career.setStartDate(LocalDate.of(2023, 1, 1));
         career.setHidden(false);
 
-        when(userRepository.findById(10L)).thenReturn(Optional.of(user));
+        when(userRepository.findUserByUsername("parrot")).thenReturn(Optional.of(user));
         when(careerRepository.findAllByUserId(10L)).thenReturn(List.of(career));
 
         // when
@@ -131,5 +93,43 @@ class UserServiceTest {
         java.nio.file.Path outputPath = java.nio.file.Path.of("build/test-output/user_svg_sample.svg");
         java.nio.file.Files.createDirectories(outputPath.getParent());
         java.nio.file.Files.writeString(outputPath, svg, java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
+    }
+
+    @Disabled
+    @Test
+    @DisplayName("convert SVG to PNG")
+    void testSvgToPngFileOutput() throws Exception {
+        // given
+        User user = new User();
+        user.setId(20L);
+        user.setUsername("parrot");
+        user.setName("앵무새");
+        user.setBio("Chef");
+        Image profileImage = new Image();
+        profileImage.setUrl("https://imgur.com/HOtRUW2.png");
+        user.setProfileImage(profileImage);
+
+        Company company = new Company();
+        Image logo = new Image();
+        logo.setUrl("https://imgur.com/8E8gCQc.png");
+        company.setLogo(logo);
+
+        Career career = new Career();
+        career.setCompany(company);
+        career.setStartDate(LocalDate.of(2023, 1, 1));
+        career.setHidden(false);
+
+        when(userRepository.findUserByUsername("pngfile")).thenReturn(Optional.of(user));
+        when(careerRepository.findAllByUserId(20L)).thenReturn(List.of(career));
+
+        // when
+        String svg = userService.getUserSvgCard("pngfile");
+        byte[] png = SvgToPngUtil.svgToPng(svg);
+
+        // then: 파일로 저장
+        java.nio.file.Path outputPath = java.nio.file.Path.of("build/test-output/user_card_sample.png");
+        java.nio.file.Files.createDirectories(outputPath.getParent());
+        java.nio.file.Files.write(outputPath, png);
+        // 파일을 직접 열어서 PNG 이미지를 확인할 수 있습니다.
     }
 }

@@ -92,7 +92,7 @@ public class UserController {
         return userService.getUserSvgCard(username);
     }
 
-    @GetMapping(value = "/{username}/card.png", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value = "/{username}/png-card", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getUserPngCard(@PathVariable String username) throws Exception {
         String svg = userService.getUserSvgCard(username);
         byte[] png = SvgToPngUtil.svgToPng(svg);

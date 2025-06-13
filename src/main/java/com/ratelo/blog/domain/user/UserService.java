@@ -200,10 +200,8 @@ public class UserService {
     }
 
     public byte[] generateUserPngCard(String username) throws Exception {
-        User user = getUserByUsername(username);
-        if (user == null) {
-            throw new EntityNotFoundException("User not found: " + username);
-        }
+        User user = userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
         String profileImageUrl = user.getProfileImage() != null ? user.getProfileImage().getUrl() : null;
         String name = user.getName();
         String bio = user.getBio();

@@ -3,7 +3,10 @@ package com.ratelo.blog.domain.user;
 import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.career.CareerRepository;
 import com.ratelo.blog.domain.company.Company;
+import com.ratelo.blog.domain.company.CompanyRepository;
 import com.ratelo.blog.domain.image.Image;
+import com.ratelo.blog.domain.image.ImageRepository;
+import com.ratelo.blog.domain.skill.SkillRepository;
 import com.ratelo.blog.util.SvgToPngUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -32,19 +35,17 @@ class UserServiceTest {
     @Mock
     private CareerRepository careerRepository;
     @Mock
-    private com.ratelo.blog.domain.image.ImageRepository imageRepository;
+    private ImageRepository imageRepository;
     @Mock
-    private com.ratelo.blog.domain.skill.SkillRepository skillRepository;
+    private SkillRepository skillRepository;
+    @Mock
+    private CompanyRepository companyRepository;
+
     @Mock
     private UserPatchMapper userPatchMapper;
 
     @InjectMocks
     private UserService userService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     @DisplayName("no career or logo")
@@ -55,6 +56,7 @@ class UserServiceTest {
         user.setName("no-career");
         user.setBio("");
         user.setProfileImage(null);
+
         when(userRepository.findUserByUsername("no-career")).thenReturn(Optional.of(user));
         when(careerRepository.findAllByUserId(3L)).thenReturn(List.of());
 
@@ -152,14 +154,15 @@ class UserServiceTest {
         profileImage.setUrl("https://unblind-kr-media.s3.ap-northeast-2.amazonaws.com/image/profile-image/shark.png");
         user.setProfileImage(profileImage);
 
-        Company company = new Company();
         Image wideLogo = new Image();
         wideLogo.setUrl("https://unblind-kr-media.s3.ap-northeast-2.amazonaws.com/image/company-logo/neubility_wide_logo.png");
+        Company company = new Company();
         company.setWideLogo(wideLogo);
         Career career = new Career();
         career.setCompany(company);
         career.setHidden(false);
         career.setStartDate(java.time.LocalDate.of(2023, 1, 1));
+        career.setUser(user);
 
         when(userRepository.findUserByUsername("parrot")).thenReturn(Optional.of(user));
         when(careerRepository.findAllByUserId(1L)).thenReturn(List.of(career));

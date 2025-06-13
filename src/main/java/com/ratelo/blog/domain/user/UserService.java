@@ -2,6 +2,7 @@ package com.ratelo.blog.domain.user;
 
 import com.ratelo.blog.domain.career.Career;
 import com.ratelo.blog.domain.career.CareerRepository;
+import com.ratelo.blog.domain.company.Company;
 import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
 import com.ratelo.blog.domain.skill.Skill;
@@ -12,13 +13,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-
 import java.util.List;
 
 @Service
@@ -209,13 +210,18 @@ public class UserService {
         // 최신 커리어에서 회사 로고 추출
         List<Career> careers = careerRepository.findAllByUserId(user.getId());
         Career latestCareer = careers.stream()
-                .filter(c -> !c.isHidden() && c.getCompany() != null && c.getCompany().getWideLogo() != null)
+                .filter(c -> !c.isHidden() && c.getCompany() != null)
                 .sorted(java.util.Comparator.comparing(Career::getStartDate, java.util.Comparator.nullsLast(java.util.Comparator.reverseOrder())))
                 .findFirst()
                 .orElse(null);
         String companyLogoUrl = null;
         if (latestCareer != null) {
-            companyLogoUrl = latestCareer.getCompany().getWideLogo().getUrl();
+            Company company = latestCareer.getCompany();
+            if (company.getWideLogo() != null) {
+                companyLogoUrl = company.getWideLogo().getUrl();
+            } else {
+                companyLogoUrl = company.getLogo().getUrl();
+            }
         }
 
         // PNG 카드 이미지 생성 (CardPngGenerator.generateCardInternal 내용 직접 구현)
@@ -250,14 +256,14 @@ public class UserService {
 
         // username
         g.setColor(new Color(34, 34, 34));
-        g.setFont(new Font("SansSerif", Font.BOLD, 84));
+        g.setFont(new Font("SansSerif", Font.BOLD, 64));
         drawCenteredString(g, username, width, 540, g);
         // name
         g.setFont(new Font("SansSerif", Font.PLAIN, 72));
         drawCenteredString(g, name, width, 640, g);
         // bio
         g.setColor(new Color(136, 136, 136));
-        g.setFont(new Font("SansSerif", Font.PLAIN, 56));
+        g.setFont(new Font("SansSerif", Font.PLAIN, 48));
         drawCenteredString(g, bio, width, 720, g);
 
         // Divider (두께 절반)

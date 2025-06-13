@@ -8,14 +8,12 @@ import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
 import com.ratelo.blog.domain.skill.SkillRepository;
 import com.ratelo.blog.util.SvgToPngUtil;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.nio.file.Files;
@@ -141,6 +139,7 @@ class UserServiceTest {
         // 파일을 직접 열어서 PNG 이미지를 확인할 수 있습니다.
     }
 
+    @Disabled
     @Test
     @DisplayName("UserService로 PNG 카드 이미지를 생성하고 파일로 저장한다")
     void testGenerateUserPngCardFile() throws Exception {

@@ -1,6 +1,5 @@
 package com.ratelo.blog.api;
 
-import com.ratelo.blog.util.SvgToPngUtil;
 import com.ratelo.blog.domain.user.UserService;
 import com.ratelo.blog.domain.user.UserType;
 import com.ratelo.blog.dto.user.*;
@@ -94,8 +93,7 @@ public class UserController {
 
     @GetMapping(value = "/{username}/png-card", produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getUserPngCard(@PathVariable String username) throws Exception {
-        String svg = userService.getUserSvgCard(username);
-        byte[] png = SvgToPngUtil.svgToPng(svg);
+        byte[] png = userService.generateUserPngCard(username);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(png);
     }
 }

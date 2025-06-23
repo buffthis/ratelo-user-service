@@ -1,22 +1,36 @@
 package com.ratelo.blog.domain.company;
 
 import com.ratelo.blog.domain.image.Image;
-import com.ratelo.blog.domain.organization.Organization;
 import com.ratelo.blog.dto.company.CompanyUpdateRequest;
-import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@SuperBuilder
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class Company extends Organization {
+@AllArgsConstructor
+public class Company {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = true, unique = true)
+    private String username;
+    private String name;
+
+    @OneToOne
+    @JoinColumn(name = "logo_id")
+    private Image logo;  // square logo
+
+    @OneToOne
+    @JoinColumn(name = "wide_logo_id")
+    private Image wideLogo;
 
     public void update(CompanyUpdateRequest request, Image logo, Image wideLogo) {
-        setName(request.getName());
-        setLogo(logo);
-        setWideLogo(wideLogo);
+        this.name = request.getName();
+        this.setLogo(logo);
+        this.setWideLogo(wideLogo);
     }
 }

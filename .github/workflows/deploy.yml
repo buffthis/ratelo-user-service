@@ -42,5 +42,4 @@ jobs:
               -e MYSQL_USERNAME=${{ vars.MYSQL_USERNAME }} \
               -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
               -e MYSQL_URL=${{ vars.MYSQL_URL }} \
-              -e S3_BUCKET_NAME=${{ vars.S3_BUCKET_NAME }} \            
               ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest

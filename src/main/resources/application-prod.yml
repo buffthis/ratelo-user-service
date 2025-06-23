@@ -1,4 +1,13 @@
 spring:
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
+      s3:
+        bucket: ${S3_BUCKET_NAME}
+      stack:
+        auto: false
+      
   datasource:
     url: ${MYSQL_URL}
     username: ${MYSQL_USERNAME}
@@ -12,3 +21,4 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+

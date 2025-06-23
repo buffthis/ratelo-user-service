@@ -3,13 +3,14 @@ package com.ratelo.blog.domain.organization;
 import com.ratelo.blog.domain.image.Image;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
+@MappedSuperclass
 public class Organization {
 
     @Id

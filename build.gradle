@@ -41,6 +41,8 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
     implementation 'org.apache.xmlgraphics:batik-transcoder:1.16'
     implementation 'org.apache.xmlgraphics:batik-codec:1.16'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 dependencyManagement {

@@ -19,6 +19,8 @@ public class UserCreateRequest {
     private String bio;
     private ImageCreateRequest imageCreateRequest;
     private UserType userType = UserType.TEST;
+    @NotNull
+    private String password;
 
     public User toEntity() {
         return User.builder()
@@ -26,6 +28,7 @@ public class UserCreateRequest {
                 .name(name)
                 .bio(bio)
                 .userType(userType)
+                .password(password)
                 .build();
     }
 }

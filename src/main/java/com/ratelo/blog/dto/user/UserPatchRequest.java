@@ -17,4 +17,5 @@ public class UserPatchRequest {
     private UserType userType;
     private Boolean disabled;
     private Boolean masked;
+    private String password;
 } 

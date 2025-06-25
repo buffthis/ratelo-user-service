@@ -8,6 +8,7 @@ import com.ratelo.blog.domain.image.Image;
 import com.ratelo.blog.domain.image.ImageRepository;
 import com.ratelo.blog.domain.skill.SkillRepository;
 import com.ratelo.blog.util.SvgToPngUtil;
+import com.ratelo.blog.dto.user.UserCreateRequest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -174,5 +177,26 @@ class UserServiceTest {
         Path outputPath = Path.of("build/test-output/card_png_sample.png");
         Files.createDirectories(outputPath.getParent());
         Files.write(outputPath, png);
+    }
+
+    @Test
+    @DisplayName("회원가입 시 비밀번호가 암호화되어 저장된다")
+    void testCreateUser_passwordIsEncoded() {
+        // given
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        UserService userService = new UserService(userRepository, careerRepository, imageRepository, skillRepository, userPatchMapper, passwordEncoder);
+        UserCreateRequest request = new UserCreateRequest();
+        request.setUsername("testuser");
+        request.setName("테스트");
+        request.setPassword("plainpassword");
+
+        // when
+        User user = new User();
+        when(userRepository.save(org.mockito.ArgumentMatchers.any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        User created = userService.createUser(request);
+
+        // then
+        assertNotNull(created.getPassword());
+        assertTrue(passwordEncoder.matches("plainpassword", created.getPassword()), "비밀번호가 암호화되어 저장되어야 한다");
     }
 }

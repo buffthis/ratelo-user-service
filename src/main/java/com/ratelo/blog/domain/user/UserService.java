@@ -11,6 +11,7 @@ import com.ratelo.blog.dto.user.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,7 @@ public class UserService {
     private final ImageRepository imageRepository;
     private final SkillRepository skillRepository;
     private final UserPatchMapper userPatchMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
@@ -50,6 +52,7 @@ public class UserService {
 
     public User createUser(UserCreateRequest request) {
         User user = request.toEntity();
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         if (request.getImageCreateRequest() != null) {
             user.setProfileImage(imageRepository.save(request.getImageCreateRequest().toEntity()));
         }
@@ -117,6 +120,9 @@ public class UserService {
         if (request.getSkillIds() != null) {
             List<Skill> skills = skillRepository.findAllById(request.getSkillIds());
             user.setSkills(skills);
+        }
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
         if (user.getUserType() == null) {
             user.setUserType(UserType.TEST);

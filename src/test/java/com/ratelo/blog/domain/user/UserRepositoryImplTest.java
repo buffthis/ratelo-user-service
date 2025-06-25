@@ -22,9 +22,9 @@ class UserRepositoryImplTest {
     @DisplayName("cursor based user search: basic and filter")
     void findAllByCursor_basic_and_filter() {
         // given
-        User user1 = User.builder().username("alice").name("Alice").userType(UserType.MEMBER).build();
-        User user2 = User.builder().username("bob").name("Bob").userType(UserType.ADMIN).build();
-        User user3 = User.builder().username("carol").name("Carol").userType(UserType.MEMBER).build();
+        User user1 = User.builder().username("alice").name("Alice").userType(UserType.MEMBER).password("pw1").build();
+        User user2 = User.builder().username("bob").name("Bob").userType(UserType.ADMIN).password("pw2").build();
+        User user3 = User.builder().username("carol").name("Carol").userType(UserType.MEMBER).password("pw3").build();
         userRepository.saveAll(List.of(user1, user2, user3));
 
         // when: first page (lastId is null)

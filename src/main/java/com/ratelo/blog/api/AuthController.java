@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.ratelo.blog.domain.user.User;
+import com.ratelo.blog.dto.user.UserResponse;
 
 @RestController
 public class AuthController {
@@ -43,5 +46,13 @@ public class AuthController {
             session.invalidate();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> me(@AuthenticationPrincipal User user) {
+        if (user == null) {
+            return ResponseEntity.status(401).body("Unauthorized");
+        }
+        return ResponseEntity.ok(UserResponse.from(user));
     }
 } 

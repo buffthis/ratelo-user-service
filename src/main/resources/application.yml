@@ -1,3 +1,10 @@
 spring:
   application:
     name: ratelo-user-service
+
+server:
+  servlet:
+    session:
+      cookie:
+        same-site: None
+        secure: true

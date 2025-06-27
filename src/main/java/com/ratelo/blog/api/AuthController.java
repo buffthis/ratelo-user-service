@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.ratelo.blog.domain.user.User;
 import com.ratelo.blog.dto.user.UserResponse;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 public class AuthController {
@@ -31,7 +32,8 @@ public class AuthController {
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
             Authentication authentication = authenticationManager.authenticate(authToken);
-            // 인증 성공 시 SecurityContext에 저장 (Spring Security가 자동 처리)
+            // 인증 성공 시 SecurityContext에 명시적으로 저장
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             httpRequest.getSession(true); // 세션 생성
             return ResponseEntity.ok().build();
         } catch (AuthenticationException e) {

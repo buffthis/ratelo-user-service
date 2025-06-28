@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.ratelo.blog.domain.user.User;
-import com.ratelo.blog.dto.user.UserResponse;
+import com.ratelo.blog.dto.user.UserSimpleResponse;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -58,6 +58,6 @@ public class AuthController {
         if (user == null) {
             return ResponseEntity.status(401).body("Unauthorized");
         }
-        return ResponseEntity.ok(UserResponse.from(user));
+        return ResponseEntity.ok(UserSimpleResponse.from(user));
     }
 } 

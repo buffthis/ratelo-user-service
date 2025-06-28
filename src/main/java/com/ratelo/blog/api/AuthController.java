@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.ratelo.blog.domain.user.User;
 import com.ratelo.blog.dto.user.UserResponse;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
@@ -32,9 +33,11 @@ public class AuthController {
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
             Authentication authentication = authenticationManager.authenticate(authToken);
-            // 인증 성공 시 SecurityContext에 명시적으로 저장
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            httpRequest.getSession(true); // 세션 생성
+            // 인증 성공 시 SecurityContext를 세션에 직접 저장 (공식 문서 방식)
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            context.setAuthentication(authentication);
+            httpRequest.getSession(true)
+                .setAttribute("SPRING_SECURITY_CONTEXT", context);
             return ResponseEntity.ok().build();
         } catch (AuthenticationException e) {
             return ResponseEntity.status(401).body("Invalid username or password");

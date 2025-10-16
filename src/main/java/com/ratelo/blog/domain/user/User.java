@@ -42,8 +42,14 @@ public class User implements UserDetails {
     @Column(length = 64)
     private String bio;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String password;
+
+    @Column(length = 20)
+    private String provider;
+
+    @Column(length = 100)
+    private String providerId;
 
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

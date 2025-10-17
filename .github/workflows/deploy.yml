@@ -39,6 +39,7 @@ jobs:
             docker run -d --name ratelo-user-service \
               -p 8081:8080 \
               -e SPRING_PROFILES_ACTIVE=prod \
+              -e BASE_URL=${{ vars.BASE_URL }} \
               -e MYSQL_USERNAME=${{ vars.MYSQL_USERNAME }} \
               -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
               -e MYSQL_URL=${{ vars.MYSQL_URL }} \

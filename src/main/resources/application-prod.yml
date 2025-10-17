@@ -23,7 +23,7 @@ spring:
             scope:
               - email
               - profile
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            redirect-uri: "${BASE_URL}/login/oauth2/code/{registrationId}"
 
         provider:
           google:

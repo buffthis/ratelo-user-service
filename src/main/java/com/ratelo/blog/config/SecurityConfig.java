@@ -1,5 +1,6 @@
 package com.ratelo.blog.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
@@ -20,12 +22,16 @@ import java.util.List;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final ClientRegistrationRepository clientRegistrationRepository;
 
     @Value("${app.oauth2.redirect-url:http://localhost:3000}")
     private String oauth2RedirectUrl;
 
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
+    public SecurityConfig(
+            @Autowired(required = false) CustomOAuth2UserService customOAuth2UserService,
+            @Autowired(required = false) ClientRegistrationRepository clientRegistrationRepository) {
         this.customOAuth2UserService = customOAuth2UserService;
+        this.clientRegistrationRepository = clientRegistrationRepository;
     }
 
     @Bean
@@ -39,13 +45,18 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                );
+
+        if (customOAuth2UserService != null && clientRegistrationRepository != null) {
+            http.oauth2Login(oauth2 -> oauth2
+                .defaultSuccessUrl(oauth2RedirectUrl, true)
+                .userInfoEndpoint(userInfo -> userInfo
+                    .userService(customOAuth2UserService)
                 )
-                .oauth2Login(oauth2 -> oauth2
-                    .defaultSuccessUrl(oauth2RedirectUrl, true)
-                    .userInfoEndpoint(userInfo -> userInfo
-                        .userService(customOAuth2UserService)
-                    )
-                )
+            );
+        }
+
+        http
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .exceptionHandling(eh -> eh

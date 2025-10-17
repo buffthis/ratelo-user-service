@@ -312,3 +312,8 @@ HELP.md
 ### Cursor ###
 .cursor/
 .cursorignore
+
+### Environment Variables ###
+.env
+.env.local
+.env.*.local

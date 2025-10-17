@@ -42,4 +42,7 @@ jobs:
               -e MYSQL_USERNAME=${{ vars.MYSQL_USERNAME }} \
               -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
               -e MYSQL_URL=${{ vars.MYSQL_URL }} \
+              -e GOOGLE_OAUTH2_WEB_CLIENT_ID=${{ vars.GOOGLE_OAUTH2_WEB_CLIENT_ID }} \
+              -e GOOGLE_OAUTH2_WEB_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH2_WEB_CLIENT_SECRET }} \
+              -e OAUTH2_REDIRECT_URL=${{ vars.OAUTH2_REDIRECT_URL }} \
               ${{ vars.DOCKER_USERNAME }}/ratelo-user-service:latest

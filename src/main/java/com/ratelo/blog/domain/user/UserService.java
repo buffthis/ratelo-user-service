@@ -35,7 +35,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
 
     public List<User> getAllUsers() {
@@ -47,7 +48,8 @@ public class UserService {
     }
 
     public User getUserByUsername(String username) {
-        return userRepository.findUserByUsername(username).orElse(null);
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
     }
 
     public User createUser(UserCreateRequest request) {
@@ -146,7 +148,6 @@ public class UserService {
     public String getUserSvgCard(String username) {
         User user = getUserByUsername(username);
         Long id = user.getId();
-        if (user == null) throw new EntityNotFoundException("User not found with username: " + username);
 
         String profileImageUrl = user.getProfileImage() != null ? user.getProfileImage().getUrl() : null;
         String name = user.getName() != null ? user.getName() : "";
